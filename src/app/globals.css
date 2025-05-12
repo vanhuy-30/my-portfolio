@@ -1,3 +1,45 @@
+/* Import Tailwind CSS directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Thiết lập font chữ mặc định và màu nền cho body */
+body {
+  @apply font-sans bg-background text-text;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Kiểu cuộn trang mượt mà */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Tùy chỉnh thanh cuộn (tùy chọn) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0D9488; /* primary color */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0F766E; /* primary-hover color */
+}
+
+/* CSS cho hiệu ứng gõ chữ (nếu bạn muốn thêm) */
+.typed-cursor {
+  opacity: 1;
+  animation: blink 0.7s infinite;
+}
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
