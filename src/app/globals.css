@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+    background-image: radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 45%);
+  }
+
+  a {
+    @apply outline-none;
+  }
+
+  a:focus-visible {
+    @apply rounded-md ring-2 ring-cyan-300 ring-offset-2 ring-offset-slate-950;
+  }
+}
