@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ly Van Huy — Portfolio
 
-## Getting Started
+Bilingual (EN / VI) personal portfolio for Ly Van Huy, Software Engineer. Built to present experience, projects, and contact details for recruiters and hiring managers.
 
-First, run the development server:
+**Live stack:** Next.js 15 · React 19 · TypeScript · Tailwind CSS · Framer Motion · Cloudflare Workers (OpenNext)
+
+## Features
+
+- Light-first UI with dark mode and warm terracotta theme
+- English / Vietnamese locale toggle
+- Sections: Hero, About, Experience, Projects (case studies), Architecture, Skills, Contact
+- Motion and interaction polish (scroll progress, reveals, case-study sheet)
+- Deployed to Cloudflare Workers via `@opennextjs/cloudflare`
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Local Next.js dev server (Turbopack) |
+| `npm run build` | Production build for Cloudflare Workers (OpenNext) |
+| `npm run start` | Serve a local Next.js production build |
+| `npm run lint` | ESLint |
+| `npm run preview` | Build + preview in the Workers runtime locally |
+| `npm run deploy` | Build + deploy to Cloudflare Workers |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+  app/           # App Router (layout, page, robots, sitemap)
+  components/    # UI, layout, sections, projects
+  data/          # Profile, experience, projects, skills
+  i18n/          # EN / VI copy
+  lib/           # Theme, site helpers, links
+public/          # Static assets (images, _headers)
+wrangler.jsonc   # Cloudflare Worker config (includes `previews`)
+open-next.config.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+Content lives mainly under `src/data/` and `src/i18n/`. Update those files to change copy, projects, or contact links without restructuring the UI.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (Cloudflare Workers)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This app uses OpenNext + Wrangler. Workers Builds expects a Wrangler config with a `previews` block for branch preview deploys.
 
-## Deploy on Vercel
+```bash
+# Local Workers preview
+npm run preview
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Production deploy (requires Cloudflare auth)
+npm run deploy
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+CI: connect the GitHub repo to a Worker in the Cloudflare dashboard. Build command should run `npm run build` (OpenNext). Preview/deploy uses Wrangler (`wrangler preview` / `wrangler deploy`).
+
+## License
+
+See [LICENSE](./LICENSE).
