@@ -1,16 +1,53 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // Import font Inter
+import { JetBrains_Mono, Outfit } from "next/font/google";
+import { AppProviders } from "@/components/providers/AppProviders";
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import "./globals.css";
-import Navbar from "@components/Navbar";
-import Footer from "@components/Footer";
 
-// Cấu hình font Inter
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Portfolio Của Tôi | [Tên Của Bạn]", // Thay [Tên Của Bạn]
-  description: "Chào mừng đến với portfolio cá nhân của tôi, được xây dựng bằng Next.js và Tailwind CSS.",
-  // Thêm các metadata khác nếu cần: keywords, openGraph, etc.
+  title: "Ly Van Huy, Software Engineer",
+  description:
+    "Software engineer in Ho Chi Minh City. Flutter, React, and mobile products for Motives Vietnam and Vitalify Asia.",
+  openGraph: {
+    title: "Ly Van Huy, Software Engineer",
+    description:
+      "Flutter, React, and mobile products. Motives Vietnam and Vitalify Asia.",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/images/hero-signal-layers.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ly Van Huy portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ly Van Huy, Software Engineer",
+    description:
+      "Flutter, React, and mobile products. Motives Vietnam and Vitalify Asia.",
+    images: ["/images/hero-signal-layers.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -19,13 +56,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={inter.variable}> {/* Sử dụng biến font */}
-      <body className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8 md:px-6 lg:px-8">
-          {children}
-        </main>
-        <Footer />
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${outfit.variable} ${jetbrains.variable} font-sans`}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('portfolio-theme')||localStorage.getItem('stephen-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');document.documentElement.dataset.theme='dark';}else{document.documentElement.dataset.theme='light';}var l=localStorage.getItem('portfolio-locale')||localStorage.getItem('stephen-locale');if(l==='en'||l==='vi'){document.documentElement.lang=l;}}catch(e){}})();`,
+          }}
+        />
+        <AppProviders>
+          <div
+            aria-hidden
+            className="pointer-events-none fixed inset-0 z-[55] opacity-[0.035] mix-blend-overlay grain"
+          />
+          <ScrollProgress />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );
