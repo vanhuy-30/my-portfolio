@@ -63,3 +63,11 @@ next-env.d.ts
 # optional local agent / design artifacts
 .cursor/
 design-system/
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
