@@ -58,7 +58,7 @@ export function Projects() {
         </Reveal>
 
         <LayoutGroup id="project-filters">
-          <div className="mb-10 flex gap-2 overflow-x-auto pb-1">
+          <div className="snap-rail mb-8 sm:mb-10" role="toolbar" aria-label={t.projects.title}>
             {filters.map((id) => {
               const selected = filter === id;
               return (

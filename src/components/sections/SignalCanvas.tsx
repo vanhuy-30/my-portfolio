@@ -10,12 +10,15 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { useLocale } from "@/components/providers/LocaleProvider";
+import { usePointerFine } from "@/hooks/usePointerFine";
 import { profile } from "@/data/profile";
 
 export function SignalCanvas() {
   const { t } = useLocale();
   const focusSkills = profile.primarySkills.slice(0, 4);
   const reduce = useReducedMotion();
+  const fine = usePointerFine();
+  const interactive = !reduce && fine;
   const ref = useRef<HTMLDivElement>(null);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -28,7 +31,7 @@ export function SignalCanvas() {
   const ringTop = useMotionTemplate`calc(${glowY}% - 40px)`;
 
   function onMove(event: React.MouseEvent<HTMLDivElement>) {
-    if (reduce || !ref.current) return;
+    if (!interactive || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width;
     const py = (event.clientY - rect.top) / rect.height;
@@ -46,21 +49,21 @@ export function SignalCanvas() {
   }
 
   return (
-    <div className="relative mx-auto w-full max-w-md lg:max-w-none [perspective:1200px]">
+    <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none [perspective:1200px]">
       <motion.div
         ref={ref}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
+        onMouseMove={interactive ? onMove : undefined}
+        onMouseLeave={interactive ? onLeave : undefined}
         style={
-          reduce
-            ? undefined
-            : {
+          interactive
+            ? {
                 rotateX: springRX,
                 rotateY: springRY,
                 transformStyle: "preserve-3d",
               }
+            : undefined
         }
-        className="relative aspect-[3/4] overflow-hidden rounded-panel border border-border bg-[var(--canvas-b)] shadow-panel"
+        className="relative aspect-[4/5] max-h-[52dvh] overflow-hidden rounded-panel border border-border bg-[var(--canvas-b)] shadow-panel sm:aspect-[3/4] sm:max-h-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-bg"
         aria-label={t.hero.canvasLabel}
       >
         <Image
@@ -71,11 +74,18 @@ export function SignalCanvas() {
           sizes="(max-width: 1024px) 90vw, 520px"
           className="object-cover"
         />
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 mix-blend-multiply dark:mix-blend-screen"
-          style={{ background: glow }}
-        />
+        {interactive ? (
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 mix-blend-multiply dark:mix-blend-screen"
+            style={{ background: glow }}
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(420px_circle_at_58%_34%,color-mix(in_srgb,var(--accent)_22%,transparent),transparent_55%)] mix-blend-multiply dark:mix-blend-screen"
+          />
+        )}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[var(--bg)]/35 to-transparent"
@@ -85,12 +95,12 @@ export function SignalCanvas() {
           className="pointer-events-none absolute inset-x-6 top-6 h-px signal-ticks opacity-70"
         />
 
-        <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-          <div className="rounded-panel border border-white/30 bg-[color-mix(in_srgb,var(--bg)_72%,transparent)] p-4 backdrop-blur-md dark:border-white/10">
+        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-6">
+          <div className="rounded-panel border border-white/30 bg-[color-mix(in_srgb,var(--bg)_72%,transparent)] p-3.5 sm:p-4 backdrop-blur-md dark:border-white/10">
             <p className="text-xs font-medium text-accent-ink">
               {t.hero.stackLabel}
             </p>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-2.5 flex flex-wrap gap-2 sm:mt-3">
               {focusSkills.map((skill) => (
                 <span
                   key={skill}
@@ -103,15 +113,19 @@ export function SignalCanvas() {
           </div>
         </div>
 
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute size-20 rounded-full border border-accent/70"
-          style={
-            reduce
-              ? { left: "calc(58% - 40px)", top: "calc(34% - 40px)" }
-              : { left: ringLeft, top: ringTop }
-          }
-        />
+        {interactive ? (
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute size-20 rounded-full border border-accent/70"
+            style={{ left: ringLeft, top: ringTop }}
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute size-16 rounded-full border border-accent/50"
+            style={{ left: "calc(58% - 32px)", top: "calc(34% - 32px)" }}
+          />
+        )}
       </motion.div>
     </div>
   );

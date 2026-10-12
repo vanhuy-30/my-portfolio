@@ -35,21 +35,24 @@ export function Architecture() {
 
         <Reveal delay={0.06}>
           <p className="mb-4 text-sm text-ink-muted">{t.architecture.hint}</p>
-          <div className="mb-6 flex flex-wrap gap-2">
+          <div
+            className="snap-rail mb-6 sm:flex-wrap sm:overflow-visible sm:[mask-image:none]"
+            role="tablist"
+            aria-label={t.architecture.title}
+          >
             {architectureLayers.map((layer) => {
               const selected = layer.id === active;
               return (
                 <button
                   key={layer.id}
                   type="button"
-                  aria-pressed={selected}
-                  onMouseEnter={() => setActive(layer.id)}
-                  onFocus={() => setActive(layer.id)}
+                  role="tab"
+                  aria-selected={selected}
                   onClick={() => setActive(layer.id)}
                   className={cn(
-                    "relative min-h-11 rounded-control border px-4 py-2.5 text-sm transition",
+                    "relative min-h-11 shrink-0 rounded-control border px-4 py-2.5 text-sm transition",
                     selected
-                      ? "border-accent text-ink"
+                      ? "border-accent text-ink shadow-[inset_0_0_0_1px_var(--accent)]"
                       : "border-border text-ink-muted hover:border-accent/40 hover:text-ink"
                   )}
                 >

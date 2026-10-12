@@ -66,7 +66,7 @@ function RoleBody({
       {needsToggle ? (
         <button
           type="button"
-          className="mt-3 text-sm font-medium text-accent-ink transition hover:underline"
+          className="mt-3 inline-flex min-h-11 items-center rounded-control px-1 text-sm font-medium text-accent-ink transition hover:underline focus-visible:outline-none"
           onClick={() => setExpanded((value) => !value)}
           aria-expanded={expanded}
         >
@@ -115,8 +115,14 @@ export function Experience() {
           {!reduce ? (
             <motion.div
               aria-hidden
-              className="absolute left-0 top-2 w-px origin-top bg-accent md:left-0"
+              className="absolute left-0 top-2 hidden w-px origin-top bg-accent md:left-0 md:block"
               style={{ height: lineHeight }}
+            />
+          ) : null}
+          {!reduce ? (
+            <div
+              aria-hidden
+              className="absolute left-0 top-2 bottom-2 w-px bg-[color-mix(in_srgb,var(--accent)_55%,transparent)] md:hidden"
             />
           ) : null}
 

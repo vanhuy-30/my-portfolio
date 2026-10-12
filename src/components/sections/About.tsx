@@ -24,13 +24,13 @@ export function About() {
       <Container>
         <div className="grid items-start gap-10 md:grid-cols-[minmax(0,200px)_1fr] lg:grid-cols-[240px_1fr] lg:gap-14">
           <Reveal delay={0.04} variant="scale">
-            <div className="relative aspect-[4/5] w-full max-w-[240px] overflow-hidden rounded-panel border border-border bg-[var(--canvas-a)] shadow-soft">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-[200px] overflow-hidden rounded-panel border border-border bg-[var(--canvas-a)] shadow-soft sm:mx-0 sm:max-w-[240px]">
               <Image
                 src="/images/avatar.jpg"
                 alt={profile.name}
                 fill
                 priority
-                className="object-cover object-[center_22%]"
+                className="object-cover object-[center_22%] transition duration-700 ease-out hover:scale-[1.03]"
                 sizes="240px"
               />
             </div>

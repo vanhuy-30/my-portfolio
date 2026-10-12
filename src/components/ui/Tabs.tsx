@@ -52,7 +52,7 @@ export function Tabs({
                 });
               }}
               className={cn(
-                "rounded-control px-3 py-2 text-sm transition",
+                "inline-flex min-h-11 items-center rounded-control px-3.5 py-2 text-sm transition",
                 selected
                   ? "bg-accent text-[var(--on-accent)]"
                   : "text-ink-muted hover:text-ink hover:bg-[color-mix(in_srgb,var(--surface)_80%,transparent)]"

@@ -153,7 +153,7 @@ export function CaseStudySheet({
               <a
                 key={item.label}
                 href={item.href}
-                className="inline-flex items-center gap-2 rounded-control border border-border px-4 py-2 text-sm hover:border-accent hover:text-accent-ink transition"
+                className="inline-flex min-h-11 items-center gap-2 rounded-control border border-border px-4 py-2.5 text-sm hover:border-accent hover:text-accent-ink transition"
               >
                 {item.icon ? <item.icon className="size-4" aria-hidden /> : null}
                 {item.label}
