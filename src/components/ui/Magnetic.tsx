@@ -7,6 +7,7 @@ import {
   useSpring,
   useReducedMotion,
 } from "framer-motion";
+import { usePointerFine } from "@/hooks/usePointerFine";
 import { cn } from "@/lib/cn";
 
 export function Magnetic({
@@ -20,13 +21,14 @@ export function Magnetic({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const fine = usePointerFine();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 220, damping: 18, mass: 0.4 });
   const springY = useSpring(y, { stiffness: 220, damping: 18, mass: 0.4 });
 
   function onMove(event: React.MouseEvent<HTMLDivElement>) {
-    if (reduce || !ref.current) return;
+    if (reduce || !fine || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const dx = event.clientX - (rect.left + rect.width / 2);
     const dy = event.clientY - (rect.top + rect.height / 2);
@@ -39,7 +41,7 @@ export function Magnetic({
     y.set(0);
   }
 
-  if (reduce) {
+  if (reduce || !fine) {
     return <div className={className}>{children}</div>;
   }
 

@@ -11,7 +11,7 @@ export function LocaleToggle({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative inline-flex items-center rounded-control border border-border p-0.5 font-mono text-[11px] uppercase tracking-[0.14em]",
+        "relative inline-flex min-h-11 items-center rounded-control border border-border p-1 font-mono text-xs uppercase tracking-[0.14em]",
         className
       )}
       role="group"
@@ -25,7 +25,7 @@ export function LocaleToggle({ className }: { className?: string }) {
             type="button"
             onClick={() => setLocale(code)}
             className={cn(
-              "relative z-10 rounded-[10px] px-2.5 py-1.5 transition",
+              "relative z-10 inline-flex min-h-9 min-w-11 items-center justify-center rounded-[10px] px-3 transition",
               active ? "text-[var(--on-accent)]" : "text-ink-muted hover:text-ink"
             )}
             aria-pressed={active}

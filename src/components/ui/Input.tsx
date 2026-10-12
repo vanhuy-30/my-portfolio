@@ -31,7 +31,7 @@ export function Input({
   return (
     <input
       className={cn(
-        "w-full rounded-control border border-border bg-[var(--surface-elevated)] px-4 py-3 text-sm text-ink placeholder:text-muted transition duration-200 focus:border-accent focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--accent)_22%,transparent)]",
+        "w-full min-h-11 rounded-control border border-border bg-[var(--surface-elevated)] px-4 py-3 text-sm text-ink placeholder:text-muted transition duration-200 focus:border-accent focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--accent)_22%,transparent)]",
         className
       )}
       {...props}

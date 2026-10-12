@@ -16,7 +16,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={toggleTheme}
       whileTap={reduce ? undefined : { scale: 0.9, rotate: 12 }}
       className={cn(
-        "relative inline-flex size-10 items-center justify-center overflow-hidden rounded-control border border-border text-ink-muted transition hover:text-ink hover:border-accent",
+        "relative inline-flex size-11 items-center justify-center overflow-hidden rounded-control border border-border text-ink-muted transition hover:text-ink hover:border-accent",
         className
       )}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}

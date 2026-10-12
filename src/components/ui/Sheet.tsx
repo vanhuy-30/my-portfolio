@@ -73,7 +73,7 @@ export function Sheet({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.25 }}
+            transition={{ duration: reduce ? 0 : 0.28 }}
             onClick={onClose}
           />
           <motion.aside
@@ -83,23 +83,23 @@ export function Sheet({
             aria-label={title}
             tabIndex={-1}
             className={cn(
-              "relative z-10 flex h-full w-full max-w-xl flex-col border-l border-border bg-[var(--surface-elevated)] shadow-panel outline-none"
+              "relative z-10 flex h-[100dvh] w-full max-w-xl flex-col border-l border-border bg-[var(--surface-elevated)] shadow-panel outline-none"
             )}
             initial={reduce ? false : { x: "100%" }}
             animate={{ x: 0 }}
-            exit={reduce ? undefined : { x: "104%" }}
+            exit={reduce ? undefined : { x: "100%" }}
             transition={
               reduce
                 ? { duration: 0 }
                 : { type: "spring", stiffness: 320, damping: 34, mass: 0.85 }
             }
           >
-            <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-4 md:px-6">
+            <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-border bg-[var(--surface-elevated)] px-4 py-3 sm:px-5 md:px-6 md:py-4">
               <motion.h2
                 initial={reduce ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.12 }}
-                className="text-lg md:text-xl font-semibold tracking-tight"
+                className="min-w-0 truncate text-lg md:text-xl font-semibold tracking-tight"
               >
                 {title}
               </motion.h2>
@@ -107,7 +107,7 @@ export function Sheet({
                 type="button"
                 onClick={onClose}
                 whileTap={reduce ? undefined : { scale: 0.9, rotate: 90 }}
-                className="inline-flex size-10 items-center justify-center rounded-control text-ink-muted hover:bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] hover:text-ink"
+                className="inline-flex size-11 shrink-0 items-center justify-center rounded-control text-ink-muted hover:bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] hover:text-ink"
                 aria-label={closeLabel}
               >
                 <X className="size-5" aria-hidden />
@@ -117,7 +117,7 @@ export function Sheet({
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="flex-1 overflow-y-auto px-5 py-6 md:px-6"
+              className="flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-5 md:px-6 md:py-6"
             >
               {children}
             </motion.div>

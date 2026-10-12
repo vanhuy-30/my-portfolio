@@ -40,7 +40,7 @@ export function Button({
       whileTap={reduce || disabled ? undefined : { scale: 0.97 }}
       transition={{ type: "spring", stiffness: 420, damping: 24 }}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-control px-5 py-2.5 text-sm font-medium whitespace-nowrap disabled:opacity-50 disabled:pointer-events-none cursor-pointer",
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-control px-5 py-2.5 text-sm font-medium whitespace-nowrap disabled:opacity-50 disabled:pointer-events-none cursor-pointer",
         variants[variant],
         className
       )}

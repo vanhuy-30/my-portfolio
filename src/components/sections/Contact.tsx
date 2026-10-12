@@ -106,17 +106,47 @@ export function Contact() {
           <Reveal delay={0.06}>
             <div className="space-y-4">
               <p className="text-sm font-medium text-ink">{t.contact.orReach}</p>
-              <ul className="space-y-3">
+              <motion.ul
+                className="space-y-3"
+                initial={reduce ? false : "hidden"}
+                whileInView={reduce ? undefined : "show"}
+                viewport={{ once: true, amount: 0.25 }}
+                variants={
+                  reduce
+                    ? undefined
+                    : {
+                        hidden: {},
+                        show: {
+                          transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+                        },
+                      }
+                }
+              >
                 {reachLinks.map((item) => (
-                  <li key={item.aria}>
+                  <motion.li
+                    key={item.aria}
+                    variants={
+                      reduce
+                        ? undefined
+                        : {
+                            hidden: { opacity: 0, y: 14 },
+                            show: {
+                              opacity: 1,
+                              y: 0,
+                              transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                            },
+                          }
+                    }
+                  >
                     <motion.a
                       href={item.href}
                       aria-label={item.aria}
                       whileHover={reduce ? undefined : { y: -2 }}
+                      whileTap={reduce ? undefined : { scale: 0.99 }}
                       transition={{ type: "spring", stiffness: 320, damping: 24 }}
                       className="group flex min-h-14 w-full items-center gap-3 rounded-panel border border-[color-mix(in_srgb,var(--ink)_12%,transparent)] bg-[color-mix(in_srgb,var(--canvas-b)_72%,var(--canvas-a))] px-4 py-3 text-sm shadow-[0_10px_28px_-20px_rgba(61,42,28,0.28)] transition-[border-color,background-color,box-shadow] duration-200 hover:border-[color-mix(in_srgb,var(--ink)_22%,transparent)] hover:bg-[var(--canvas-b)] hover:shadow-[0_14px_32px_-18px_rgba(61,42,28,0.36)] dark:border-[color-mix(in_srgb,var(--ink)_16%,transparent)] dark:bg-[var(--surface)] dark:hover:bg-[var(--surface-elevated)]"
                     >
-                      <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-control bg-[color-mix(in_srgb,var(--canvas-a)_55%,var(--surface))] text-ink transition group-hover:bg-[var(--canvas-a)] group-hover:text-accent-ink">
+                      <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-control bg-[color-mix(in_srgb,var(--canvas-a)_55%,var(--surface))] text-ink transition group-hover:bg-[var(--canvas-a)] group-hover:text-accent-ink">
                         <item.icon className="size-4" aria-hidden />
                       </span>
                       <span className="min-w-0">
@@ -128,9 +158,9 @@ export function Contact() {
                         </span>
                       </span>
                     </motion.a>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </div>
           </Reveal>
 

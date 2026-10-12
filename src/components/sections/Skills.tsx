@@ -12,6 +12,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { Stagger, StaggerItem } from "@/components/ui/Stagger";
 import { skillGroups } from "@/data/skills";
 import { cn } from "@/lib/cn";
 import type { SkillCategory } from "@/types";
@@ -34,14 +35,19 @@ export function Skills() {
 
         <Reveal delay={0.08}>
           <div className="space-y-6">
-            <div className="relative flex flex-row gap-2 overflow-x-auto pb-1">
+            <div
+              className="snap-rail"
+              role="tablist"
+              aria-label={t.skills.title}
+            >
               {skillGroups.map((group) => {
                 const selected = active === group.id;
                 return (
                   <button
                     key={group.id}
                     type="button"
-                    aria-pressed={selected}
+                    role="tab"
+                    aria-selected={selected}
                     onClick={() => setActive(group.id)}
                     className={cn(
                       "relative min-h-11 shrink-0 whitespace-nowrap rounded-control border px-4 py-3 text-left text-sm transition",
@@ -77,25 +83,15 @@ export function Skills() {
                   <h3 className="text-lg font-semibold tracking-tight text-ink">
                     {t.skills.categories[current.id]}
                   </h3>
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    {current.items.map((item, index) => (
-                      <motion.div
-                        key={item}
-                        initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          delay: index * 0.04,
-                          type: "spring",
-                          stiffness: 320,
-                          damping: 22,
-                        }}
-                      >
+                  <Stagger className="mt-5 flex flex-wrap gap-3" delay={0.04}>
+                    {current.items.map((item) => (
+                      <StaggerItem key={item}>
                         <Badge className="cursor-default px-4 py-2 transition hover:border-accent hover:text-accent-ink hover:-translate-y-0.5">
                           {item}
                         </Badge>
-                      </motion.div>
+                      </StaggerItem>
                     ))}
-                  </div>
+                  </Stagger>
                 </motion.div>
               </AnimatePresence>
             </div>

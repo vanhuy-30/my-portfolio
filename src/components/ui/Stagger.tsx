@@ -28,7 +28,7 @@ export function Stagger({
         hidden: {},
         show: {
           transition: {
-            staggerChildren: 0.07,
+            staggerChildren: 0.055,
             delayChildren: delay,
           },
         },
@@ -56,11 +56,11 @@ export function StaggerItem({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 18 },
+        hidden: { opacity: 0, y: 14 },
         show: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
         },
       }}
     >

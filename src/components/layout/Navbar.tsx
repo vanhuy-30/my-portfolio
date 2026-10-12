@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -31,6 +31,8 @@ export function Navbar() {
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const { activeId, focusSection } = useActiveSection(SECTION_IDS);
   const { scrollY } = useScroll();
 
@@ -55,6 +57,20 @@ export function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    const firstLink = menuRef.current?.querySelector<HTMLElement>("a[href]");
+    firstLink?.focus();
+    return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
   return (
@@ -117,10 +133,12 @@ export function Navbar() {
         </div>
 
         <motion.button
+          ref={menuButtonRef}
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-control border border-border lg:hidden"
+          className="inline-flex size-11 items-center justify-center rounded-control border border-border lg:hidden"
           aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
           aria-expanded={open}
+          aria-controls="mobile-nav"
           whileTap={reduce ? undefined : { scale: 0.94 }}
           onClick={() => setOpen((v) => !v)}
         >
@@ -131,6 +149,8 @@ export function Navbar() {
       <AnimatePresence>
         {open ? (
           <motion.div
+            id="mobile-nav"
+            ref={menuRef}
             initial={reduce ? false : { height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={reduce ? undefined : { height: 0, opacity: 0 }}
