@@ -11,8 +11,10 @@ import {
 import { Menu, X } from "lucide-react";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { usePointerFine } from "@/hooks/usePointerFine";
 import { cn } from "@/lib/cn";
 import { profile } from "@/data/profile";
+import { BrandMark } from "./BrandMark";
 import { LocaleToggle } from "./LocaleToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -29,6 +31,8 @@ const SECTION_IDS = [
 export function Navbar() {
   const { t } = useLocale();
   const reduce = useReducedMotion();
+  const fine = usePointerFine();
+  const motionOk = Boolean(fine && !reduce);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -91,9 +95,35 @@ export function Navbar() {
       >
         <a
           href="#home"
-          className="font-semibold tracking-tight text-ink transition hover:text-accent-ink"
+          aria-label={profile.name}
+          className="group flex min-w-0 items-center gap-2.5 rounded-control py-1 pr-1"
         >
-          {profile.name}
+          <BrandMark
+            className={cn(
+              "transition duration-500 ease-out",
+              motionOk && "group-hover:-rotate-6 group-hover:scale-105"
+            )}
+          />
+          <span className="flex min-w-0 flex-col leading-none">
+            <span
+              className={cn(
+                "font-mono text-[13px] font-medium uppercase tracking-[0.16em] text-muted transition-[letter-spacing,color] duration-300",
+                motionOk && "group-hover:tracking-[0.24em] group-hover:text-accent-ink"
+              )}
+            >
+              Ly Van
+            </span>
+            <span className="relative mt-1 text-[1.35rem] font-semibold tracking-[-0.04em] text-ink transition-colors duration-300 group-hover:text-accent-ink">
+              Huy
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out",
+                  motionOk && "group-hover:scale-x-100"
+                )}
+              />
+            </span>
+          </span>
         </a>
 
         <ul className="hidden lg:flex items-center gap-0.5 xl:gap-1">

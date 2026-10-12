@@ -50,16 +50,16 @@ export function Skills() {
                     aria-selected={selected}
                     onClick={() => setActive(group.id)}
                     className={cn(
-                      "relative min-h-11 shrink-0 whitespace-nowrap rounded-control border px-4 py-3 text-left text-sm transition",
+                      "relative min-h-11 shrink-0 whitespace-nowrap rounded-control border px-4 py-3 text-left text-sm transition active:scale-[0.98]",
                       selected
-                        ? "border-accent text-ink"
-                        : "border-border text-ink-muted hover:text-ink hover:border-accent/40"
+                        ? "border-accent text-[var(--on-accent)]"
+                        : "border-border bg-[var(--surface-elevated)] text-ink hover:border-accent hover:text-accent-ink"
                     )}
                   >
                     {selected ? (
                       <motion.span
                         layoutId={reduce ? undefined : "skill-tab"}
-                        className="absolute inset-0 rounded-control bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]"
+                        className="absolute inset-0 rounded-control bg-accent"
                         transition={{ type: "spring", stiffness: 360, damping: 28 }}
                       />
                     ) : null}

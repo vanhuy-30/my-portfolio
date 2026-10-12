@@ -114,7 +114,7 @@ export function ProjectCard({
           "group relative w-full overflow-hidden rounded-panel border border-[color-mix(in_srgb,var(--ink)_20%,transparent)] bg-white text-left shadow-[0_16px_36px_-18px_rgba(61,42,28,0.42),0_1px_0_0_rgba(255,255,255,0.8)_inset] transition-[border-color,box-shadow,transform] duration-300 hover:border-accent hover:shadow-[0_26px_52px_-20px_rgba(61,42,28,0.52),0_1px_0_0_rgba(255,255,255,0.85)_inset] dark:border-[color-mix(in_srgb,var(--ink)_24%,transparent)] dark:bg-[var(--surface-elevated)] dark:shadow-[0_20px_48px_-20px_rgba(0,0,0,0.75)] dark:hover:shadow-[0_28px_60px_-18px_rgba(0,0,0,0.85)]",
           isFeature
             ? "flex h-full flex-col md:min-h-[360px] md:flex-row"
-            : "grid min-h-[7.5rem] grid-cols-[96px_1fr] items-stretch gap-0 sm:min-h-0 sm:grid-cols-[148px_1fr] md:grid-cols-[180px_1fr]"
+            : "flex flex-col md:grid md:min-h-[10.5rem] md:grid-cols-[11.5rem_minmax(0,1fr)] md:items-stretch"
         )}
       >
         {interactive ? (
@@ -132,13 +132,14 @@ export function ProjectCard({
 
         <div
           className={cn(
-            "relative overflow-hidden",
+            "relative w-full shrink-0 overflow-hidden",
             isFeature
-              ? "aspect-[16/11] md:aspect-auto md:w-[48%] md:min-h-[360px]"
-              : "aspect-square sm:aspect-auto sm:h-full",
+              ? "md:w-[48%] md:min-h-[360px] md:self-stretch"
+              : "md:h-full md:min-h-[10.5rem] md:w-auto",
             project.images[0] ? "bg-[var(--canvas-a)]" : coverTone(project.category)
           )}
         >
+          <div className="aspect-video md:hidden" aria-hidden />
           {project.images[0] ? (
             <Image
               src={project.images[0]}
@@ -151,7 +152,7 @@ export function ProjectCard({
               sizes={
                 isFeature
                   ? "(max-width: 768px) 100vw, 560px"
-                  : "(max-width: 640px) 96px, 180px"
+                  : "(max-width: 768px) 100vw, 184px"
               }
             />
           ) : (
@@ -178,10 +179,10 @@ export function ProjectCard({
 
         <div
           className={cn(
-            "relative z-10 flex min-w-0 flex-1 flex-col",
+            "relative z-10 flex min-w-0 flex-1 flex-col bg-white dark:bg-[var(--surface-elevated)]",
             isFeature
               ? "p-5 md:justify-center md:p-8"
-              : "justify-center p-3.5 sm:p-5 md:px-6 md:py-5"
+              : "justify-center p-4 sm:p-5 md:px-6 md:py-5"
           )}
         >
           <div className="flex items-start justify-between gap-3">
@@ -192,7 +193,7 @@ export function ProjectCard({
               <h3
                 className={cn(
                   "mt-1 font-semibold tracking-tight text-ink transition-colors duration-300 group-hover:text-accent-ink",
-                  isFeature ? "text-2xl md:text-3xl" : "text-base sm:text-xl md:text-2xl"
+                  isFeature ? "text-2xl md:text-3xl" : "text-lg sm:text-xl md:text-2xl"
                 )}
               >
                 {project.name}
