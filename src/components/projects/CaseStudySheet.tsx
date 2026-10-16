@@ -1,13 +1,41 @@
 "use client";
 
 import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Lock } from "lucide-react";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
 import { externalHref } from "@/lib/links";
 import { Sheet } from "@/components/ui/Sheet";
-import { Tabs } from "@/components/ui/Tabs";
 import type { Project } from "@/types";
+
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      <h3 className="text-xs font-medium uppercase tracking-[0.14em] text-accent-ink">
+        {title}
+      </h3>
+      <div className="mt-3 text-sm leading-relaxed text-ink-muted md:text-base">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function Bullets({ id, items }: { id: string; items: string[] }) {
+  return (
+    <ul className="list-disc space-y-2 pl-5 marker:text-accent">
+      {items.map((item, index) => (
+        <li key={`${id}-${index}`}>{item}</li>
+      ))}
+    </ul>
+  );
+}
 
 export function CaseStudySheet({
   project,
@@ -36,131 +64,105 @@ export function CaseStudySheet({
       : null,
   ].filter((item): item is NonNullable<typeof item> => Boolean(item));
 
-  const tabs = [
-    {
-      id: "overview",
-      label: t.projects.tabs.overview,
-      content: (
-        <div className="space-y-4">
-          <p>{project.caseStudy.overview}</p>
-          <p>{project.caseStudy.problem}</p>
-          <p>{project.caseStudy.solution}</p>
-          <p>{project.caseStudy.contribution}</p>
-        </div>
-      ),
-    },
-    {
-      id: "approach",
-      label: t.projects.tabs.approach,
-      content: (
-        <div className="space-y-5">
-          <ul className="list-disc space-y-2 pl-5">
-            {project.caseStudy.technicalDecisions.map((item, index) => (
-              <li key={`${project.id}-tech-${index}`}>{item}</li>
-            ))}
-          </ul>
-          <ul className="list-disc space-y-2 pl-5">
-            {project.caseStudy.challenges.map((item, index) => (
-              <li key={`${project.id}-challenge-${index}`}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      ),
-    },
-    {
-      id: "results",
-      label: t.projects.tabs.results,
-      content: (
-        <ul className="list-disc space-y-2 pl-5">
-          {project.caseStudy.results.map((item, index) => (
-            <li key={`${project.id}-result-${index}`}>{item}</li>
-          ))}
-        </ul>
-      ),
-    },
-  ];
-
   return (
     <Sheet
       open={open}
       onClose={onClose}
       title={project.name}
       closeLabel={t.common.close}
+      wide
     >
-      <div className="space-y-8">
-        {project.images.length ? (
-          <div className="grid gap-3">
-            {project.images.map((src) => (
-              <div
-                key={src}
-                className="relative aspect-[16/10] overflow-hidden rounded-panel border border-border bg-[var(--surface)]"
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 512px"
-                />
-              </div>
-            ))}
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10">
+        <aside className="space-y-6 lg:sticky lg:top-0 lg:self-start">
+          {project.image ? (
+            <div className="relative aspect-[16/10] overflow-hidden rounded-panel border border-border bg-[var(--surface)]">
+              <Image
+                src={project.image}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 340px"
+              />
+            </div>
+          ) : null}
+
+          <div>
+            <p className="text-sm font-medium text-muted">
+              {[project.company, project.period].filter(Boolean).join(" · ")}
+            </p>
+            <p className="mt-1 text-sm text-ink md:text-base">{project.role}</p>
           </div>
-        ) : null}
 
-        <div>
-          <p className="text-sm font-medium text-muted">{t.projects.role}</p>
-          <p className="mt-1 text-sm md:text-base">{project.role}</p>
-          <p className="mt-3 text-sm text-ink-muted leading-relaxed">
-            {project.shortDescription}
-          </p>
-          <p className="mt-4 max-w-[62ch] text-base text-ink">{project.outcome}</p>
-        </div>
+          {project.metrics.length ? (
+            <dl className="grid grid-cols-2 gap-3">
+              {project.metrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="rounded-control border border-border px-3 py-2.5"
+                >
+                  <dt className="sr-only">{metric.label}</dt>
+                  <dd className="text-lg font-semibold tracking-tight text-ink">
+                    {metric.value}
+                  </dd>
+                  <dd className="text-xs text-ink-muted">{metric.label}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
 
-        <div>
-          <p className="mb-3 text-sm font-medium text-muted">
-            {t.projects.technologies}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {project.technologies.map((tech) => (
-              <Badge key={tech}>{tech}</Badge>
-            ))}
-          </div>
-        </div>
-
-        {project.features.length ? (
           <div>
             <p className="mb-3 text-sm font-medium text-muted">
-              {t.projects.features}
+              {t.projects.technologies}
             </p>
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {project.features.map((feature, index) => (
-                <li
-                  key={`${project.id}-feature-${index}`}
-                  className="rounded-control border border-border bg-[var(--surface)]/60 px-3 py-2.5 text-sm text-ink"
-                >
-                  {feature}
-                </li>
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <Badge key={tech}>{tech}</Badge>
               ))}
-            </ul>
+            </div>
           </div>
-        ) : null}
 
-        <Tabs items={tabs} label={t.projects.openCase} />
+          {project.nda ? (
+            <p className="flex items-start gap-2 rounded-control border border-border bg-[var(--surface)]/60 px-3 py-2.5 text-sm text-ink-muted">
+              <Lock className="mt-0.5 size-4 shrink-0" aria-hidden />
+              {t.projects.ndaNote}
+            </p>
+          ) : null}
 
-        {links.length ? (
-          <div className="flex flex-wrap gap-3 border-t border-border pt-6">
-            {links.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="inline-flex min-h-11 items-center gap-2 rounded-control border border-border px-4 py-2.5 text-sm hover:border-accent hover:text-accent-ink transition"
-              >
-                {item.icon ? <item.icon className="size-4" aria-hidden /> : null}
-                {item.label}
-              </a>
-            ))}
-          </div>
-        ) : null}
+          {links.length ? (
+            <div className="flex flex-wrap gap-3">
+              {links.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-control border border-border px-4 py-2.5 text-sm transition hover:border-accent hover:text-accent-ink"
+                >
+                  {item.icon ? <item.icon className="size-4" aria-hidden /> : null}
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </aside>
+
+        <div className="space-y-8">
+          <p className="text-base leading-relaxed text-ink md:text-lg">
+            {project.shortDescription}
+          </p>
+          <Section title={t.projects.sections.context}>
+            <p>{project.caseStudy.context}</p>
+          </Section>
+          <Section title={t.projects.sections.built}>
+            <Bullets id={`${project.id}-built`} items={project.caseStudy.built} />
+          </Section>
+          <Section title={t.projects.sections.decisions}>
+            <Bullets id={`${project.id}-decision`} items={project.caseStudy.decisions} />
+          </Section>
+          <Section title={t.projects.sections.results}>
+            <Bullets id={`${project.id}-result`} items={project.caseStudy.results} />
+          </Section>
+        </div>
       </div>
     </Sheet>
   );

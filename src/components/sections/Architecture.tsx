@@ -1,27 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLocale } from "@/components/providers/LocaleProvider";
-import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import {
-  architectureLayers,
-  type ArchitectureLayerId,
-} from "@/data/architecture";
-import { cn } from "@/lib/cn";
+import { principles } from "@/data/architecture";
 
 export function Architecture() {
   const { t } = useLocale();
-  const reduce = useReducedMotion();
-  const [active, setActive] = useState<ArchitectureLayerId>("presentation");
-  const current =
-    architectureLayers.find((layer) => layer.id === active) ??
-    architectureLayers[0];
 
   return (
     <SectionShell id="architecture" tone="surface">
@@ -33,80 +20,31 @@ export function Architecture() {
           />
         </Reveal>
 
-        <Reveal delay={0.06}>
-          <p className="mb-4 text-sm text-ink-muted">{t.architecture.hint}</p>
-          <div
-            className="snap-rail mb-6 sm:flex-wrap sm:overflow-visible sm:[mask-image:none]"
-            role="tablist"
-            aria-label={t.architecture.title}
-          >
-            {architectureLayers.map((layer) => {
-              const selected = layer.id === active;
-              return (
-                <button
-                  key={layer.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  onClick={() => setActive(layer.id)}
-                  className={cn(
-                    "relative min-h-11 shrink-0 rounded-control border px-4 py-2.5 text-sm transition",
-                    selected
-                      ? "border-accent text-ink shadow-[inset_0_0_0_1px_var(--accent)]"
-                      : "border-border text-ink-muted hover:border-accent/40 hover:text-ink"
-                  )}
-                >
-                  {selected ? (
-                    <motion.span
-                      layoutId={reduce ? undefined : "arch-pill"}
-                      className="absolute inset-0 rounded-control bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]"
-                      transition={{ type: "spring", stiffness: 360, damping: 28 }}
-                    />
-                  ) : null}
-                  <span className="relative z-10">
-                    {t.architecture.layers[layer.id]}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1} variant="scale">
-          <div className="relative min-h-[280px] overflow-hidden rounded-panel border border-border shadow-panel md:min-h-[400px]">
-            <Image
-              src="/images/architecture-layers.jpg"
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 1100px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/25 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={current.id}
-                  initial={reduce ? false : { opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? undefined : { opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35 }}
-                  className="max-w-2xl rounded-panel border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] p-4 backdrop-blur-md md:p-5"
-                >
-                  <p className="text-sm font-medium text-accent-ink">
-                    {t.architecture.layers[current.id]}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {current.patterns.map((pattern) => (
-                      <Badge key={pattern} active>
-                        {pattern}
-                      </Badge>
-                    ))}
+        <ul className="grid gap-4 md:grid-cols-2">
+          {principles.map(({ id, icon: Icon }, index) => {
+            const copy = t.architecture.principles[id];
+            return (
+              <li key={id} className="min-w-0">
+                <Reveal delay={Math.min(index, 3) * 0.06} className="h-full">
+                  <div className="flex h-full flex-col rounded-panel border border-border bg-[var(--surface-elevated)] p-5 shadow-soft md:p-6">
+                    <span className="inline-flex size-11 items-center justify-center rounded-control bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-accent-ink">
+                      <Icon className="size-5" aria-hidden />
+                    </span>
+                    <h3 className="mt-4 text-lg font-semibold tracking-tight text-ink md:text-xl">
+                      {copy.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-muted md:text-base">
+                      {copy.body}
+                    </p>
+                    <p className="mt-auto pt-4 font-mono text-xs text-accent-ink">
+                      {copy.proof}
+                    </p>
                   </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </Reveal>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
       </Container>
     </SectionShell>
   );

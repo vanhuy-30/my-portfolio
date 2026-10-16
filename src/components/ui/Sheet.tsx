@@ -12,12 +12,14 @@ export function Sheet({
   title,
   children,
   closeLabel = "Close",
+  wide = false,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
   closeLabel?: string;
+  wide?: boolean;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
@@ -51,11 +53,20 @@ export function Sheet({
       }
     };
     document.addEventListener("keydown", onKey);
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    // Lock the page itself (html is the scroller) so only the panel scrolls,
+    // and pad by the scrollbar width so the page does not shift.
+    const root = document.documentElement;
+    const scrollbar = window.innerWidth - root.clientWidth;
+    const original = {
+      overflow: root.style.overflow,
+      paddingRight: document.body.style.paddingRight,
+    };
+    root.style.overflow = "hidden";
+    if (scrollbar > 0) document.body.style.paddingRight = `${scrollbar}px`;
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = original;
+      root.style.overflow = original.overflow;
+      document.body.style.paddingRight = original.paddingRight;
       previous?.focus();
     };
   }, [open, onClose]);
@@ -83,7 +94,8 @@ export function Sheet({
             aria-label={title}
             tabIndex={-1}
             className={cn(
-              "relative z-10 flex h-[100dvh] w-full max-w-xl flex-col border-l border-border bg-[var(--surface-elevated)] shadow-panel outline-none"
+              "relative z-10 flex h-[100dvh] w-full max-w-xl flex-col border-l border-border bg-[var(--surface-elevated)] shadow-panel outline-none",
+              wide && "lg:max-w-4xl"
             )}
             initial={reduce ? false : { x: "100%" }}
             animate={{ x: 0 }}
@@ -117,7 +129,7 @@ export function Sheet({
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-5 md:px-6 md:py-6"
+              className="sheet-scroll flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-5 md:px-6 md:py-6 lg:px-8 lg:py-8"
             >
               {children}
             </motion.div>

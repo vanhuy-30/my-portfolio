@@ -23,7 +23,12 @@ const variants: Record<
   },
   clip: {
     initial: { opacity: 0, clipPath: "inset(10% 0 10% 0)" },
-    animate: { opacity: 1, clipPath: "inset(0% 0 0% 0)" },
+    // Drop the clip once revealed so diacritics above the line box stay visible.
+    animate: {
+      opacity: 1,
+      clipPath: "inset(0% 0 0% 0)",
+      transitionEnd: { clipPath: "none" },
+    },
   },
 };
 

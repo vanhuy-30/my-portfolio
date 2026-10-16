@@ -100,6 +100,20 @@ summary {
   border-radius: 999px;
 }
 
+/* Quieter scrollbar inside panels so it doesn't compete with the content. */
+.sheet-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted) 45%, transparent) transparent;
+}
+
+.sheet-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sheet-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

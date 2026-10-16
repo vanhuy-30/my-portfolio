@@ -21,8 +21,8 @@ import { ThemeToggle } from "./ThemeToggle";
 const SECTION_IDS = [
   "home",
   "about",
-  "projects",
   "experience",
+  "projects",
   "skills",
   "architecture",
   "contact",
@@ -43,8 +43,8 @@ export function Navbar() {
   const links = useMemo(
     () => [
       { id: "about", label: t.nav.about },
-      { id: "projects", label: t.nav.projects },
       { id: "experience", label: t.nav.experience },
+      { id: "projects", label: t.nav.projects },
       { id: "skills", label: t.nav.skills },
       { id: "architecture", label: t.nav.architecture },
       { id: "contact", label: t.nav.contact },

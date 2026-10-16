@@ -14,6 +14,7 @@ export function About() {
   const reduce = useReducedMotion();
 
   const rows = [
+    { label: t.about.currentLabel, value: t.about.currentValue },
     { label: t.about.educationLabel, value: t.about.educationValue },
     { label: t.about.languagesLabel, value: t.about.languagesValue },
     { label: t.common.basedIn, value: t.about.locationValue },
@@ -45,7 +46,7 @@ export function About() {
               />
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="max-w-[48ch] text-base md:text-lg text-ink-muted leading-relaxed">
+              <p className="max-w-[62ch] text-base md:text-lg text-ink-muted leading-relaxed">
                 {t.about.body}
               </p>
             </Reveal>

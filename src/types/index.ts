@@ -2,11 +2,12 @@ export type Locale = "en" | "vi";
 export type Theme = "light" | "dark";
 
 export type SkillCategory =
-  | "frontend"
   | "mobile"
+  | "web"
   | "backend"
-  | "architecture"
-  | "tools";
+  | "ai"
+  | "aiTools"
+  | "practices";
 
 export interface SkillGroup {
   id: SkillCategory;
@@ -20,69 +21,72 @@ export interface ProjectLinks {
   playStore?: string;
 }
 
+export interface ProjectMetric {
+  value: string;
+  label: string;
+}
+
 export interface ProjectCaseStudy {
-  overview: string;
-  problem: string;
-  solution: string;
-  contribution: string;
-  technicalDecisions: string[];
-  challenges: string[];
+  context: string;
+  built: string[];
+  decisions: string[];
   results: string[];
 }
 
-export type ProjectCategory = "mobile" | "web" | "personal";
+export type ProjectKind = "work" | "side";
+export type ProjectCoverIcon = "sparkles" | "store" | "wallet";
 
 export interface Project {
   id: string;
-  category: ProjectCategory;
+  kind: ProjectKind;
+  featured?: boolean;
+  nda?: boolean;
+  inProgress?: boolean;
   name: string;
+  company?: string;
+  period: string;
   role: string;
   shortDescription: string;
   technologies: string[];
-  features: string[];
-  challenges: string[];
-  outcome: string;
+  metrics: ProjectMetric[];
   links: ProjectLinks;
-  images: string[];
+  image?: string;
+  coverIcon?: ProjectCoverIcon;
   caseStudy: ProjectCaseStudy;
-  featured?: boolean;
 }
 
-export interface ExperienceRole {
-  title: string;
-  startDate: string;
-  endDate: string;
-  current?: boolean;
-  responsibilities: string[];
-  technologies: string[];
-  achievements: string[];
+export interface OtherWorkItem {
+  id: string;
+  name: string;
+  detail: string;
+}
+
+export interface ExperiencePhase {
+  label: string;
+  period?: string;
+  points: string[];
 }
 
 export interface ExperienceItem {
   id: string;
   company: string;
+  title: string;
+  period: string;
   location?: string;
-  roles: ExperienceRole[];
-}
-
-export interface GithubRepo {
-  id: string;
-  name: string;
-  description: string;
-  language: string;
-  stars: number;
-  stack: string[];
-  url: string;
+  summary: string;
+  phases: ExperiencePhase[];
+  technologies: string[];
 }
 
 export interface Profile {
   name: string;
   shortName: string;
+  nickname: string;
   role: string;
   location: string;
   email: string;
-  phone: string;
-  github?: string;
+  github: string;
   linkedin: string;
-  primarySkills: string[];
+  portfolioRepo: string;
+  currentCompany: string;
 }

@@ -11,7 +11,7 @@ export function SectionHeading({
 }) {
   return (
     <header className={cn("mb-10 md:mb-14 max-w-2xl", className)}>
-      <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-semibold tracking-tight text-balance leading-[1.1]">
+      <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-semibold tracking-tight text-balance leading-[1.2]">
         {title}
       </h2>
       {subtitle ? (
