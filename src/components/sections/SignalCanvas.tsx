@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
   useMotionTemplate,
@@ -10,15 +10,14 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { useLocale } from "@/components/providers/LocaleProvider";
-import { usePointerFine } from "@/hooks/usePointerFine";
 
 export function SignalCanvas() {
   const { t } = useLocale();
   const nowStack = ["Mobile", "Web", "Backend", "AI"];
   const reduce = useReducedMotion();
-  const fine = usePointerFine();
-  const interactive = !reduce && fine;
+  const interactive = !reduce;
   const ref = useRef<HTMLDivElement>(null);
+  const releaseTimer = useRef<number | undefined>(undefined);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const glowX = useMotionValue(58);
@@ -29,8 +28,13 @@ export function SignalCanvas() {
   const ringLeft = useMotionTemplate`calc(${glowX}% - 40px)`;
   const ringTop = useMotionTemplate`calc(${glowY}% - 40px)`;
 
-  function onMove(event: React.MouseEvent<HTMLDivElement>) {
+  useEffect(() => () => window.clearTimeout(releaseTimer.current), []);
+
+  function onMove(event: React.PointerEvent<HTMLDivElement>) {
     if (!interactive || !ref.current) return;
+    // Touch only reports movement while the finger is down.
+    if (event.pointerType !== "mouse" && event.buttons === 0) return;
+    window.clearTimeout(releaseTimer.current);
     const rect = ref.current.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width;
     const py = (event.clientY - rect.top) / rect.height;
@@ -38,6 +42,13 @@ export function SignalCanvas() {
     rotateX.set((0.5 - py) * 10);
     glowX.set(px * 100);
     glowY.set(py * 100);
+  }
+
+  // On touch, hold the tilt briefly after lifting so a tap reads as a response.
+  function onRelease(event: React.PointerEvent<HTMLDivElement>) {
+    if (event.pointerType === "mouse") return;
+    window.clearTimeout(releaseTimer.current);
+    releaseTimer.current = window.setTimeout(onLeave, 450);
   }
 
   function onLeave() {
@@ -51,14 +62,24 @@ export function SignalCanvas() {
     <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none [perspective:1200px]">
       <motion.div
         ref={ref}
-        onMouseMove={interactive ? onMove : undefined}
-        onMouseLeave={interactive ? onLeave : undefined}
+        onPointerDown={interactive ? onMove : undefined}
+        onPointerMove={interactive ? onMove : undefined}
+        onPointerUp={interactive ? onRelease : undefined}
+        onPointerCancel={interactive ? onLeave : undefined}
+        onPointerLeave={
+          interactive
+            ? (event) => event.pointerType === "mouse" && onLeave()
+            : undefined
+        }
         style={
           interactive
             ? {
                 rotateX: springRX,
                 rotateY: springRY,
                 transformStyle: "preserve-3d",
+                // Keep vertical page scroll; horizontal drags drive the tilt.
+                touchAction: "pan-y",
+                WebkitTapHighlightColor: "transparent",
               }
             : undefined
         }
