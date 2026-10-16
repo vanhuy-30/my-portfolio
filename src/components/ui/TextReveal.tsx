@@ -22,9 +22,14 @@ export function TextReveal({
   }
 
   return (
-    <Tag className={cn("overflow-hidden", className)}>
+    <Tag className={className}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden mr-[0.28em] last:mr-0">
+        // The mask is padded (and pulled back with negative margins) so
+        // descenders and stacked Vietnamese diacritics are not clipped.
+        <span
+          key={`${word}-${i}`}
+          className="-mb-[0.18em] -mt-[0.28em] mr-[0.28em] inline-block overflow-hidden pb-[0.18em] pt-[0.28em] last:mr-0"
+        >
           <motion.span
             className="inline-block"
             initial={{ y: "110%", opacity: 0 }}

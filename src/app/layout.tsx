@@ -7,14 +7,16 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
+// Outfit has no Vietnamese subset; precomposed Vietnamese letters fall back
+// to the system font. JetBrains Mono does ship one.
+const sans = Outfit({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
   display: "swap",
 });
 
 const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   variable: "--font-jetbrains",
   display: "swap",
 });
@@ -24,10 +26,10 @@ const description =
 
 export const metadata: Metadata = {
   ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),
-  title: "Ly Van Huy, Software Engineer",
+  title: "Ly Van Huy (Stephen), Software Engineer",
   description,
   openGraph: {
-    title: "Ly Van Huy, Software Engineer",
+    title: "Ly Van Huy (Stephen), Software Engineer",
     description,
     type: "website",
     locale: "en_US",
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ly Van Huy, Software Engineer",
+    title: "Ly Van Huy (Stephen), Software Engineer",
     description,
     images: ["/images/hero-signal-layers.jpg"],
   },
@@ -59,7 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} ${jetbrains.variable} font-sans`}>
+      <body className={`${sans.variable} ${jetbrains.variable} font-sans`}>
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('portfolio-theme')||localStorage.getItem('stephen-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');document.documentElement.dataset.theme='dark';}else{document.documentElement.dataset.theme='light';}var l=localStorage.getItem('portfolio-locale')||localStorage.getItem('stephen-locale');if(l==='en'||l==='vi'){document.documentElement.lang=l;}}catch(e){}})();`,

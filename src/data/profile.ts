@@ -3,6 +3,7 @@ import type { Profile } from "@/types";
 export const profile: Profile = {
   name: "Ly Van Huy",
   shortName: "Huy",
+  nickname: "Stephen",
   role: "Software Engineer",
   location: "Ho Chi Minh City",
   email: "vanhuyforwork@gmail.com",

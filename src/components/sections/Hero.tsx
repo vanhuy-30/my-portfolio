@@ -48,7 +48,7 @@ export function Hero() {
           <TextReveal
             as="h1"
             text={t.hero.greeting}
-            className="mt-3 text-4xl sm:text-5xl lg:text-[3.75rem] font-semibold tracking-tight leading-[1.1] pb-1"
+            className="mt-3 text-4xl sm:text-5xl lg:text-[3.75rem] font-semibold tracking-tight leading-[1.15] pb-1"
             delay={0.04}
           />
 

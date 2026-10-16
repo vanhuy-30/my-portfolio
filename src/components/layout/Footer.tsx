@@ -23,9 +23,12 @@ export function Footer() {
         <Reveal>
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="font-semibold tracking-tight">{profile.name}</p>
+              <p className="font-semibold tracking-tight">
+                {profile.name}{" "}
+                <span className="font-normal text-ink-muted">({profile.nickname})</span>
+              </p>
               <p className="mt-1 text-sm text-ink-muted">
-                {t.footer.rights}{" "}
+                © {new Date().getFullYear()} {profile.name}. {t.footer.rights}{" "}
                 <a
                   href={profile.portfolioRepo}
                   target="_blank"

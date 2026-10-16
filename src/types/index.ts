@@ -81,6 +81,7 @@ export interface ExperienceItem {
 export interface Profile {
   name: string;
   shortName: string;
+  nickname: string;
   role: string;
   location: string;
   email: string;
