@@ -20,7 +20,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 const description =
-  "Software engineer in Ho Chi Minh City. Flutter and Android apps, a React HR and ERP app used by ~500 people, and AI tools on local LLMs.";
+  "Software engineer in Ho Chi Minh City building mobile and web apps, backend APIs, and AI tools on local LLMs. Flutter, React, and an HR platform used by ~500 people.";
 
 export const metadata: Metadata = {
   ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),

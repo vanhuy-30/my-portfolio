@@ -28,9 +28,9 @@ export const en = {
     eyebrow: "Software Engineer · Ho Chi Minh City",
     greeting: "Hi, I'm Huy.",
     headline:
-      "I build mobile apps, business platforms, and AI tools that teams use every day.",
+      "I build software end to end: mobile and web apps, the APIs behind them, and AI tools that teams use every day.",
     supporting:
-      "Nearly 5 years across Flutter, Android, and React, from BLE medical apps for Japanese clients to a company-wide HR and operations app and AI agents on local LLMs.",
+      "Nearly 5 years shipping production software, from BLE medical apps for Japanese clients to a company-wide HR and operations platform, its backend APIs, and AI agents on local LLMs.",
     factsLabel: "At a glance",
     factYears: "~5 yrs",
     factYearsLabel: "building software",
@@ -40,13 +40,12 @@ export const en = {
     factAiLabel: "AI features in use",
     nowLabel: "Now",
     nowValue: "Software Engineer at Motives Vietnam",
-    visualLabel: "Internal social and golf app, built in Flutter",
   },
   about: {
     title: "About",
-    lead: "I started on native Android, moved to Flutter, and now build whole products in-house.",
+    lead: "A software engineer who started in mobile and now works across the whole product.",
     body:
-      "At Vitalify Asia I shipped apps for Japanese clients, including one that talks to Omron medical devices over BLE. At Motives Vietnam I work across the stack: Flutter apps, M System, a React HR and ERP app used by ~500 people, the APIs behind them, and AI tools for each department. I care about clear structure, steady releases, and software that fits how people actually work.",
+      "At Vitalify Asia I shipped Android and Flutter apps for Japanese clients, including one that talks to Omron medical devices over BLE. At Motives Vietnam I take features from requirement to release: the Flutter or React UI, the REST APIs and business logic behind it, integrations with Outlook and Odoo, and AI tools on local LLMs. M System alone serves ~500 employees. I care about clear structure, steady releases, and software that fits how people actually work.",
     currentLabel: "Currently",
     currentValue: "Software Engineer, Motives Vietnam",
     educationLabel: "Education",
@@ -56,7 +55,7 @@ export const en = {
     locationValue: "Ho Chi Minh City, Vietnam",
   },
   projects: {
-    title: "Selected work",
+    title: "Featured projects",
     subtitle:
       "Products from Motives Vietnam and Vitalify Asia. Most are internal or client apps under NDA, so I describe them without links or screenshots of real data.",
     sideTitle: "Side projects",
@@ -67,7 +66,7 @@ export const en = {
     openCase: "Case study",
     ndaNote:
       "Internal or client app under NDA. No public link, and details stay high level.",
-    tabs: {
+    sections: {
       context: "Context",
       built: "What I built",
       decisions: "Decisions",
@@ -76,7 +75,7 @@ export const en = {
   },
   experience: {
     title: "Experience",
-    subtitle: "Two companies, one path: Android, then Flutter, then full products across mobile, web, and AI.",
+    subtitle: "From mobile developer to software engineer: Android, then Flutter, then products across mobile, web, backend, and AI.",
     showMore: "Show more",
     showLess: "Show less",
   },

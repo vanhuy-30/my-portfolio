@@ -171,7 +171,7 @@ const source: SourceProject[] = [
     name: { en: "Internal Social & Golf App", vi: "App mạng xã hội nội bộ & Golf" },
     company: "Motives Vietnam",
     period: { en: "2024 – 2025", vi: "2024 – 2025" },
-    role: { en: "Flutter Developer, built from scratch", vi: "Flutter Developer, xây từ đầu" },
+    role: { en: "Software Engineer, built from scratch", vi: "Software Engineer, xây từ đầu" },
     shortDescription: {
       en: "A company social app with posts, friends, chat, and sports clubs, plus a GPS golf-scoring module for leadership.",
       vi: "App mạng xã hội nội bộ với đăng bài, kết bạn, nhắn tin, câu lạc bộ thể thao, kèm module ghi điểm golf có GPS cho ban lãnh đạo.",
@@ -232,7 +232,7 @@ const source: SourceProject[] = [
     name: { en: "Restaurant Loyalty Platform", vi: "Nền tảng loyalty cho chuỗi nhà hàng" },
     company: "Motives Vietnam",
     period: { en: "2026 – Present", vi: "2026 – nay" },
-    role: { en: "Mobile and web admin", vi: "Mobile và web admin" },
+    role: { en: "Software Engineer, app and web admin", vi: "Software Engineer, app và web admin" },
     shortDescription: {
       en: "A membership app and web admin for a restaurant chain in the group: scan receipts, earn points, redeem rewards.",
       vi: "App thành viên và web admin cho chuỗi nhà hàng trong tập đoàn: quét hoá đơn, tích điểm, đổi quà.",

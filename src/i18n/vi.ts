@@ -30,9 +30,9 @@ export const vi: Dictionary = {
     eyebrow: "Software Engineer · TP. Hồ Chí Minh",
     greeting: "Xin chào, tôi là Huy.",
     headline:
-      "Tôi xây app mobile, nền tảng nghiệp vụ và công cụ AI mà các team dùng mỗi ngày.",
+      "Tôi xây phần mềm trọn vẹn: app mobile và web, API phía sau, và công cụ AI mà các team dùng mỗi ngày.",
     supporting:
-      "Gần 5 năm với Flutter, Android và React, từ app y tế kết nối BLE cho khách hàng Nhật đến app nhân sự và vận hành toàn công ty và AI agent chạy trên LLM local.",
+      "Gần 5 năm làm phần mềm chạy production, từ app y tế kết nối BLE cho khách hàng Nhật đến nền tảng nhân sự và vận hành toàn công ty, API backend của nó, và AI agent chạy trên LLM local.",
     factsLabel: "Tóm tắt",
     factYears: "~5 năm",
     factYearsLabel: "làm phần mềm",
@@ -42,13 +42,12 @@ export const vi: Dictionary = {
     factAiLabel: "chức năng AI đang dùng",
     nowLabel: "Hiện tại",
     nowValue: "Software Engineer tại Motives Vietnam",
-    visualLabel: "App mạng xã hội nội bộ và golf, viết bằng Flutter",
   },
   about: {
     title: "Giới thiệu",
-    lead: "Tôi bắt đầu với Android native, chuyển sang Flutter, và giờ xây trọn sản phẩm in-house.",
+    lead: "Kỹ sư phần mềm bắt đầu từ mobile, giờ làm xuyên suốt cả sản phẩm.",
     body:
-      "Ở Vitalify Asia, tôi làm app cho khách hàng Nhật, trong đó có app kết nối thiết bị y tế Omron qua BLE. Ở Motives Vietnam, tôi làm xuyên suốt: app Flutter, M System, app nhân sự và ERP bằng React cho khoảng 500 người, API phía sau, và công cụ AI cho từng phòng ban. Tôi coi trọng cấu trúc rõ ràng, phát hành đều đặn, và phần mềm khớp với cách mọi người thực sự làm việc.",
+      "Ở Vitalify Asia, tôi làm app Android và Flutter cho khách hàng Nhật, trong đó có app kết nối thiết bị y tế Omron qua BLE. Ở Motives Vietnam, tôi đưa tính năng từ yêu cầu đến phát hành: giao diện Flutter hoặc React, REST API và logic nghiệp vụ phía sau, tích hợp Outlook và Odoo, và công cụ AI chạy trên LLM local. Riêng M System phục vụ khoảng 500 nhân viên. Tôi coi trọng cấu trúc rõ ràng, phát hành đều đặn, và phần mềm khớp với cách mọi người thực sự làm việc.",
     currentLabel: "Hiện tại",
     currentValue: "Software Engineer, Motives Vietnam",
     educationLabel: "Học vấn",
@@ -69,7 +68,7 @@ export const vi: Dictionary = {
     openCase: "Case study",
     ndaNote:
       "App nội bộ hoặc app khách hàng có NDA. Không có link công khai, chi tiết ở mức tổng quan.",
-    tabs: {
+    sections: {
       context: "Bối cảnh",
       built: "Tôi đã làm",
       decisions: "Quyết định",
@@ -78,7 +77,7 @@ export const vi: Dictionary = {
   },
   experience: {
     title: "Kinh nghiệm",
-    subtitle: "Hai công ty, một hướng đi: Android, rồi Flutter, rồi trọn sản phẩm trên mobile, web và AI.",
+    subtitle: "Từ mobile developer đến software engineer: Android, rồi Flutter, rồi sản phẩm trên mobile, web, backend và AI.",
     showMore: "Xem thêm",
     showLess: "Thu gọn",
   },

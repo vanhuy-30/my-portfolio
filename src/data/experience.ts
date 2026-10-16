@@ -26,8 +26,8 @@ const source: SourceItem[] = [
     period: { en: "Aug 2024 – Present", vi: "08/2024 – Hiện tại" },
     location: { en: "Ho Chi Minh City", vi: "TP. Hồ Chí Minh" },
     summary: {
-      en: "In-house product work across mobile, web, and AI. I build tools that departments use every day, from the first screen to the API behind it.",
-      vi: "Làm sản phẩm in-house trên mobile, web và AI. Tôi xây công cụ mà các phòng ban dùng hằng ngày, từ màn hình đầu tiên đến API phía sau.",
+      en: "In-house engineer for the group's companies. I take features from requirement to release: app and web UI, backend APIs and business logic, integrations, and AI tooling.",
+      vi: "Kỹ sư in-house cho các công ty trong tập đoàn. Tôi đưa tính năng từ yêu cầu đến phát hành: giao diện app và web, API backend và logic nghiệp vụ, tích hợp hệ thống, và công cụ AI.",
     },
     phases: [
       {

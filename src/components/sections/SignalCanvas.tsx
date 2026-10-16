@@ -14,7 +14,7 @@ import { usePointerFine } from "@/hooks/usePointerFine";
 
 export function SignalCanvas() {
   const { t } = useLocale();
-  const nowStack = ["Flutter", "React", "AI"];
+  const nowStack = ["Mobile", "Web", "Backend", "AI"];
   const reduce = useReducedMotion();
   const fine = usePointerFine();
   const interactive = !reduce && fine;
@@ -65,8 +65,8 @@ export function SignalCanvas() {
         className="relative aspect-[4/5] max-h-[52dvh] overflow-hidden rounded-panel border border-border bg-[var(--canvas-b)] shadow-panel sm:aspect-[3/4] sm:max-h-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-bg"
       >
         <Image
-          src="/images/project-golf-app.jpg"
-          alt={t.hero.visualLabel}
+          src="/images/hero-signal-layers.jpg"
+          alt=""
           fill
           priority
           sizes="(max-width: 1024px) 90vw, 520px"

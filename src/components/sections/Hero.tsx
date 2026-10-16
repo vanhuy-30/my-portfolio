@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { Container } from "@/components/ui/Container";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { CountUp } from "@/components/ui/CountUp";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { profile } from "@/data/profile";
 import { externalHref } from "@/lib/links";
@@ -131,11 +132,11 @@ export function Hero() {
             transition={{ duration: 0.45, delay: 0.42 }}
             aria-label={t.hero.factsLabel}
           >
-            {facts.map((fact) => (
+            {facts.map((fact, index) => (
               <div key={fact.label} className="min-w-0">
                 <dt className="sr-only">{fact.label}</dt>
                 <dd className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
-                  {fact.value}
+                  <CountUp value={fact.value} delay={0.5 + index * 0.12} />
                 </dd>
                 <dd className="mt-1 text-xs leading-snug text-ink-muted md:text-sm">
                   {fact.label}
