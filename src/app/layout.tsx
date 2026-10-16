@@ -4,6 +4,7 @@ import { AppProviders } from "@/components/providers/AppProviders";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -18,14 +19,16 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const description =
+  "Software engineer in Ho Chi Minh City. Flutter and Android apps, a React HR and ERP app used by ~500 people, and AI tools on local LLMs.";
+
 export const metadata: Metadata = {
+  ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),
   title: "Ly Van Huy, Software Engineer",
-  description:
-    "Software engineer in Ho Chi Minh City. Flutter, React, and mobile products for Motives Vietnam and Vitalify Asia.",
+  description,
   openGraph: {
     title: "Ly Van Huy, Software Engineer",
-    description:
-      "Flutter, React, and mobile products. Motives Vietnam and Vitalify Asia.",
+    description,
     type: "website",
     locale: "en_US",
     images: [
@@ -40,8 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ly Van Huy, Software Engineer",
-    description:
-      "Flutter, React, and mobile products. Motives Vietnam and Vitalify Asia.",
+    description,
     images: ["/images/hero-signal-layers.jpg"],
   },
   robots: {

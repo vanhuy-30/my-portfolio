@@ -1,11 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-} from "framer-motion";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
@@ -14,17 +8,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { Stagger, StaggerItem } from "@/components/ui/Stagger";
 import { skillGroups } from "@/data/skills";
-import { cn } from "@/lib/cn";
-import type { SkillCategory } from "@/types";
 
 export function Skills() {
   const { t } = useLocale();
-  const reduce = useReducedMotion();
-  const [active, setActive] = useState<SkillCategory>("mobile");
-  const current = skillGroups.find((g) => g.id === active) ?? skillGroups[0];
 
   return (
-    <SectionShell id="skills" tone="surface">
+    <SectionShell id="skills">
       <Container>
         <Reveal variant="clip">
           <SectionHeading
@@ -33,70 +22,26 @@ export function Skills() {
           />
         </Reveal>
 
-        <Reveal delay={0.08}>
-          <div className="space-y-6">
-            <div
-              className="snap-rail"
-              role="tablist"
-              aria-label={t.skills.title}
-            >
-              {skillGroups.map((group) => {
-                const selected = active === group.id;
-                return (
-                  <button
-                    key={group.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={selected}
-                    onClick={() => setActive(group.id)}
-                    className={cn(
-                      "relative min-h-11 shrink-0 whitespace-nowrap rounded-control border px-4 py-3 text-left text-sm transition active:scale-[0.98]",
-                      selected
-                        ? "border-accent text-[var(--on-accent)]"
-                        : "border-border bg-[var(--surface-elevated)] text-ink hover:border-accent hover:text-accent-ink"
-                    )}
-                  >
-                    {selected ? (
-                      <motion.span
-                        layoutId={reduce ? undefined : "skill-tab"}
-                        className="absolute inset-0 rounded-control bg-accent"
-                        transition={{ type: "spring", stiffness: 360, damping: 28 }}
-                      />
-                    ) : null}
-                    <span className="relative z-10">
-                      {t.skills.categories[group.id]}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="relative min-h-[200px] overflow-hidden border-t border-border pt-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={current.id}
-                  initial={reduce ? false : { opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? undefined : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <h3 className="text-lg font-semibold tracking-tight text-ink">
-                    {t.skills.categories[current.id]}
-                  </h3>
-                  <Stagger className="mt-5 flex flex-wrap gap-3" delay={0.04}>
-                    {current.items.map((item) => (
-                      <StaggerItem key={item}>
-                        <Badge className="cursor-default px-4 py-2 transition hover:border-accent hover:text-accent-ink hover:-translate-y-0.5">
-                          {item}
-                        </Badge>
-                      </StaggerItem>
-                    ))}
-                  </Stagger>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </Reveal>
+        <div className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+          {skillGroups.map((group, index) => (
+            <Reveal key={group.id} delay={Math.min(index, 3) * 0.05}>
+              <div className="border-t border-border pt-5">
+                <h3 className="text-base font-semibold tracking-tight text-ink md:text-lg">
+                  {t.skills.categories[group.id]}
+                </h3>
+                <Stagger className="mt-4 flex flex-wrap gap-2" delay={0.03}>
+                  {group.items.map((item) => (
+                    <StaggerItem key={item}>
+                      <Badge className="cursor-default px-3 py-1.5 text-ink transition hover:border-accent hover:text-accent-ink">
+                        {item}
+                      </Badge>
+                    </StaggerItem>
+                  ))}
+                </Stagger>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </SectionShell>
   );

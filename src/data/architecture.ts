@@ -1,21 +1,10 @@
-export type ArchitectureLayerId = "presentation" | "domain" | "data";
+import { Blocks, BriefcaseBusiness, Rocket, Sparkles } from "lucide-react";
 
-export interface ArchitectureLayer {
-  id: ArchitectureLayerId;
-  patterns: string[];
-}
+export type PrincipleId = "structure" | "ship" | "business" | "ai";
 
-export const architectureLayers: ArchitectureLayer[] = [
-  {
-    id: "presentation",
-    patterns: ["MVVM", "UI state", "Feature screens"],
-  },
-  {
-    id: "domain",
-    patterns: ["Use cases", "Clean Architecture", "Feature modules"],
-  },
-  {
-    id: "data",
-    patterns: ["Repository pattern", "REST API layer", "Firebase"],
-  },
+export const principles: { id: PrincipleId; icon: typeof Blocks }[] = [
+  { id: "structure", icon: Blocks },
+  { id: "ship", icon: Rocket },
+  { id: "business", icon: BriefcaseBusiness },
+  { id: "ai", icon: Sparkles },
 ];

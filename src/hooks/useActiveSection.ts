@@ -36,13 +36,29 @@ export function useActiveSection(sectionIds: string[]) {
       setActiveId(readActive(ids));
     };
 
+    // Tall sections can cross the marker line without crossing any
+    // intersection threshold, so also re-check on scroll (once per frame).
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        pick();
+      });
+    };
+
     const observer = new IntersectionObserver(pick, {
       threshold: [0, 0.15, 0.35, 0.55, 0.75, 1],
     });
     elements.forEach((el) => observer.observe(el));
+    window.addEventListener("scroll", onScroll, { passive: true });
     pick();
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, [idsKey, readActive]);
 
   const focusSection = useCallback(

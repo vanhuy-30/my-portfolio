@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { profile } from "@/data/profile";
-import { externalHref } from "@/lib/links";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -13,12 +12,10 @@ export function Footer() {
   const reduce = useReducedMotion();
 
   const socials = [
-    externalHref(profile.github)
-      ? { href: externalHref(profile.github)!, label: t.common.github, icon: Github }
-      : null,
+    { href: profile.github, label: t.common.github, icon: Github },
     { href: profile.linkedin, label: t.common.linkedin, icon: Linkedin },
     { href: `mailto:${profile.email}`, label: t.common.email, icon: Mail },
-  ].filter((item): item is NonNullable<typeof item> => Boolean(item));
+  ];
 
   return (
     <footer className="border-t border-border py-10">
@@ -28,7 +25,15 @@ export function Footer() {
             <div>
               <p className="font-semibold tracking-tight">{profile.name}</p>
               <p className="mt-1 text-sm text-ink-muted">
-                {t.footer.rights} {t.about.locationValue}
+                {t.footer.rights}{" "}
+                <a
+                  href={profile.portfolioRepo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-accent-ink underline-offset-4 hover:underline"
+                >
+                  {t.footer.viewSource}
+                </a>
               </p>
             </div>
             <ul className="flex items-center gap-3">

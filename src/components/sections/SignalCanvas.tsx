@@ -11,11 +11,10 @@ import {
 } from "framer-motion";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { usePointerFine } from "@/hooks/usePointerFine";
-import { profile } from "@/data/profile";
 
 export function SignalCanvas() {
   const { t } = useLocale();
-  const focusSkills = profile.primarySkills.slice(0, 4);
+  const nowStack = ["Flutter", "React", "AI"];
   const reduce = useReducedMotion();
   const fine = usePointerFine();
   const interactive = !reduce && fine;
@@ -64,11 +63,10 @@ export function SignalCanvas() {
             : undefined
         }
         className="relative aspect-[4/5] max-h-[52dvh] overflow-hidden rounded-panel border border-border bg-[var(--canvas-b)] shadow-panel sm:aspect-[3/4] sm:max-h-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-bg"
-        aria-label={t.hero.canvasLabel}
       >
         <Image
-          src="/images/hero-signal-layers.jpg"
-          alt=""
+          src="/images/project-golf-app.jpg"
+          alt={t.hero.visualLabel}
           fill
           priority
           sizes="(max-width: 1024px) 90vw, 520px"
@@ -98,10 +96,13 @@ export function SignalCanvas() {
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-6">
           <div className="rounded-panel border border-white/30 bg-[color-mix(in_srgb,var(--bg)_72%,transparent)] p-3.5 sm:p-4 backdrop-blur-md dark:border-white/10">
             <p className="text-xs font-medium text-accent-ink">
-              {t.hero.stackLabel}
+              {t.hero.nowLabel}
+            </p>
+            <p className="mt-1 text-sm font-medium text-ink">
+              {t.hero.nowValue}
             </p>
             <div className="mt-2.5 flex flex-wrap gap-2 sm:mt-3">
-              {focusSkills.map((skill) => (
+              {nowStack.map((skill) => (
                 <span
                   key={skill}
                   className="rounded-control border border-border bg-[var(--surface-elevated)] px-3 py-1.5 text-xs font-medium"

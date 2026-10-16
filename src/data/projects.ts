@@ -1,485 +1,457 @@
 import { tx, type Copy } from "@/lib/copy";
-import type { Locale, Project, ProjectCategory, ProjectLinks } from "@/types";
+import type {
+  Locale,
+  OtherWorkItem,
+  Project,
+  ProjectCoverIcon,
+  ProjectKind,
+  ProjectLinks,
+} from "@/types";
 
 interface SourceProject {
   id: string;
-  category: ProjectCategory;
+  kind: ProjectKind;
   featured?: boolean;
+  nda?: boolean;
+  inProgress?: boolean;
   name: Copy;
+  company?: string;
+  period: Copy;
   role: Copy;
   shortDescription: Copy;
   technologies: string[];
-  features: Copy[];
-  challenges: Copy[];
-  outcome: Copy;
+  metrics: { value: Copy; label: Copy }[];
   links?: ProjectLinks;
-  images: string[];
+  image?: string;
+  coverIcon?: ProjectCoverIcon;
   caseStudy: {
-    overview: Copy;
-    problem: Copy;
-    solution: Copy;
-    contribution: Copy;
-    technicalDecisions: Copy[];
-    challenges: Copy[];
+    context: Copy;
+    built: Copy[];
+    decisions: Copy[];
     results: Copy[];
   };
 }
 
+const same = (text: string): Copy => ({ en: text, vi: text });
+
 const source: SourceProject[] = [
   {
-    id: "employee-golf-social",
-    category: "mobile",
+    id: "m-system",
+    kind: "work",
     featured: true,
-    name: {
-      en: "Employee Golf & Social Platform",
-      vi: "Nền tảng Golf và mạng xã hội nội bộ",
-    },
-    role: {
-      en: "Flutter Developer, Motives Vietnam",
-      vi: "Flutter Developer, Motives Vietnam",
-    },
+    nda: true,
+    name: { en: "M System: HR & Operations App", vi: "M System: App nhân sự & vận hành" },
+    company: "Motives Vietnam",
+    period: { en: "2025 – Present", vi: "2025 – nay" },
+    role: { en: "Software Engineer, web and mobile", vi: "Software Engineer, web và mobile" },
     shortDescription: {
-      en: "Internal Flutter app for golf scoring, maps, and employee social updates. Built for 500+ people.",
-      vi: "Ứng dụng Flutter nội bộ: điểm golf, bản đồ và cập nhật xã hội. Phục vụ hơn 500 người.",
+      en: "The app employees open every day: attendance, leave, performance reviews, news, learning, and selected ERP workflows. One React codebase for web and mobile.",
+      vi: "App nhân viên mở mỗi ngày: chấm công, nghỉ phép, đánh giá performance, bảng tin, learning và một số nghiệp vụ ERP. Một codebase React cho web và mobile.",
     },
-    technologies: ["Flutter", "Provider", "Firebase", "REST API", "Google Maps"],
-    features: [
-      { en: "Golf score tracking", vi: "Ghi điểm golf" },
-      { en: "Map navigation", vi: "Điều hướng bản đồ" },
-      { en: "Social posts and comments", vi: "Bài viết và bình luận" },
-      { en: "Push notifications", vi: "Thông báo đẩy" },
-      { en: "Club announcements", vi: "Thông báo câu lạc bộ" },
+    technologies: ["React", "TypeScript", "JavaScript", "Capacitor", "REST API", "Outlook", "Odoo"],
+    metrics: [
+      { value: same("~500"), label: { en: "employees", vi: "nhân viên" } },
+      { value: same("1"), label: { en: "codebase, web + mobile", vi: "codebase, web + mobile" } },
     ],
-    challenges: [
-      {
-        en: "Maps, tracking, and a social feed had to feel like one product.",
-        vi: "Bản đồ, theo dõi và feed xã hội phải như một sản phẩm.",
-      },
-      {
-        en: "State had to stay predictable across feature modules.",
-        vi: "State phải đoán được giữa các module tính năng.",
-      },
-    ],
-    outcome: {
-      en: "Built and released on the App Store and Google Play.",
-      vi: "Xây và phát hành trên App Store và Google Play.",
-    },
-    images: ["/images/project-golf-app.jpg"],
+    image: "/images/project-erp-hrm.jpg",
     caseStudy: {
-      overview: {
-        en: "An employee app that combines golf scoring, activity, maps, and social features in Flutter.",
-        vi: "Ứng dụng nội bộ gộp điểm golf, hoạt động, bản đồ và tính năng xã hội trên Flutter.",
+      context: {
+        en: "Motives runs on several in-house systems, including separate ERP and HRM web apps for specialized work. M System brings the HRM features and the most-used ERP features into one app that works in the browser and on phones.",
+        vi: "Motives vận hành trên nhiều hệ thống nội bộ, trong đó có trang ERP và trang HRM riêng cho các nghiệp vụ chuyên sâu. M System gom các chức năng HRM và những chức năng ERP dùng nhiều nhất vào một app chạy được trên trình duyệt lẫn điện thoại.",
       },
-      problem: {
-        en: "Employees needed one place for golf activity, colleague updates, and club news.",
-        vi: "Nhân viên cần một chỗ cho hoạt động golf, cập nhật đồng nghiệp và tin câu lạc bộ.",
-      },
-      solution: {
-        en: "A feature-based Flutter app with Firebase, REST, and Google Maps.",
-        vi: "App Flutter theo feature, dùng Firebase, REST và Google Maps.",
-      },
-      contribution: {
-        en: "Owned the mobile implementation, including social features on Firestore and Cloud Messaging.",
-        vi: "Phụ trách phần mobile, gồm tính năng xã hội trên Firestore và Cloud Messaging.",
-      },
-      technicalDecisions: [
+      built: [
         {
-          en: "Flutter so iOS and Android shared one codebase.",
-          vi: "Flutter để iOS và Android dùng chung một codebase.",
+          en: "Attendance plus leave, bereavement/wedding, and business-trip requests with approval flows.",
+          vi: "Chấm công, đơn nghỉ phép, hiếu hỷ, công tác kèm luồng duyệt.",
         },
         {
-          en: "Provider for state across feature modules.",
-          vi: "Provider cho state giữa các module.",
+          en: "A custom calendar that syncs with Outlook.",
+          vi: "Calendar tự xây, đồng bộ với Outlook.",
         },
         {
-          en: "Firebase plus REST for auth, feed data, and notifications.",
-          vi: "Firebase và REST cho auth, dữ liệu feed và thông báo.",
+          en: "Monthly performance scoring and reviews, an internal newsfeed, and a learning module linked to Odoo.",
+          vi: "Chấm và đánh giá performance hàng tháng, bảng tin nội bộ, module learning liên kết Odoo.",
+        },
+        {
+          en: "Selected ERP workflows for Accounting, QC, R&A, and other departments, plus backend APIs where needed.",
+          vi: "Một số luồng nghiệp vụ ERP cho Kế toán, QC, R&A và các phòng ban khác, kèm API backend khi cần.",
         },
       ],
-      challenges: [
+      decisions: [
         {
-          en: "Keeping maps and the social feed coherent in one navigation model.",
-          vi: "Giữ bản đồ và feed xã hội mạch lạc trong một mô hình điều hướng.",
+          en: "Capacitor wraps the same React app for mobile, so a feature ships once for both platforms.",
+          vi: "Dùng Capacitor bọc cùng app React cho mobile, nên một tính năng chỉ cần làm một lần cho cả hai nền tảng.",
         },
         {
-          en: "Holding frame rate on both mid-range and high-end phones.",
-          vi: "Giữ frame rate trên cả máy tầm trung và máy cao cấp.",
+          en: "Keep everyday tasks in M System and leave specialized modules on the dedicated ERP and HRM sites.",
+          vi: "Việc hằng ngày nằm trong M System, còn các module chuyên sâu để ở trang ERP và HRM riêng.",
+        },
+        {
+          en: "Integrate with Outlook and Odoo instead of rebuilding what teams already use.",
+          vi: "Tích hợp Outlook và Odoo thay vì làm lại những thứ các team đang dùng.",
         },
       ],
       results: [
         {
-          en: "Released on the App Store and Google Play.",
-          vi: "Phát hành trên App Store và Google Play.",
-        },
-        {
-          en: "Used by 500+ employees.",
-          vi: "Hơn 500 nhân viên sử dụng.",
+          en: "Used daily by ~500 employees across departments.",
+          vi: "Khoảng 500 nhân viên ở các phòng ban dùng hằng ngày.",
         },
       ],
     },
   },
   {
-    id: "enterprise-erp-hrm",
-    category: "web",
-    name: {
-      en: "ERP and HRM Workspace",
-      vi: "Không gian ERP và HRM",
-    },
-    role: {
-      en: "Frontend Developer, Motives Vietnam",
-      vi: "Frontend Developer, Motives Vietnam",
-    },
+    id: "ai-automation",
+    coverIcon: "sparkles",
+    kind: "work",
+    featured: true,
+    nda: true,
+    name: { en: "AI Workplace Automation", vi: "Tự động hoá công việc bằng AI" },
+    company: "Motives Vietnam",
+    period: { en: "2025 – Present", vi: "2025 – nay" },
+    role: { en: "Software Engineer, AI tooling", vi: "Software Engineer, AI tooling" },
     shortDescription: {
-      en: "Web and mobile workspace for ERP, HRM, and internal communication, from one React codebase.",
-      vi: "Không gian web và mobile cho ERP, HRM và truyền thông nội bộ, từ một codebase React.",
+      en: "AI chat, a RAG agent over internal documents, and agents that file requests for people. All built on self-hosted models, so company data stays inside.",
+      vi: "AI chat, RAG agent trên tài liệu nội bộ và các agent tạo phiếu thay người dùng. Tất cả chạy trên model self-host để dữ liệu công ty không ra ngoài.",
     },
-    technologies: ["React", "TypeScript", "Capacitor", "REST API"],
-    features: [
-      { en: "Shared UI system", vi: "Hệ UI dùng chung" },
-      { en: "Web and mobile from one codebase", vi: "Web và mobile từ một codebase" },
-      { en: "REST-backed HR and ERP flows", vi: "Luồng HR và ERP qua REST" },
+    technologies: ["Dify", "LibreChat", "Self-hosted LLMs", "RAG", "AI agents"],
+    metrics: [
+      { value: same("8+"), label: { en: "AI features in use", vi: "chức năng AI đang dùng" } },
+      { value: same("100%"), label: { en: "on local LLMs", vi: "chạy trên LLM local" } },
     ],
-    challenges: [
-      {
-        en: "Hybrid screens had to stay fast while talking to large REST payloads.",
-        vi: "Màn hybrid phải nhanh khi nhận payload REST lớn.",
-      },
-    ],
-    outcome: {
-      en: "One UI system served both the browser app and the Capacitor shell.",
-      vi: "Một hệ UI phục vụ cả app trên trình duyệt và lớp Capacitor.",
-    },
-    images: ["/images/project-erp-hrm.jpg"],
     caseStudy: {
-      overview: {
-        en: "A cross-platform workspace for ERP, HRM, and internal communication.",
-        vi: "Không gian đa nền tảng cho ERP, HRM và truyền thông nội bộ.",
+      context: {
+        en: "Part of the company's digital transformation: give each department AI help for its own work without sending internal data to public AI services.",
+        vi: "Một phần của chuyển đổi số: đưa AI vào công việc riêng của từng phòng ban mà không gửi dữ liệu nội bộ ra dịch vụ AI công cộng.",
       },
-      problem: {
-        en: "Web and mobile were drifting into separate UI implementations.",
-        vi: "Web và mobile đang lệch thành hai bản UI riêng.",
-      },
-      solution: {
-        en: "React and TypeScript with Capacitor, plus a reusable component layer.",
-        vi: "React và TypeScript với Capacitor, cộng một lớp component dùng lại.",
-      },
-      contribution: {
-        en: "Led the frontend and the shared UI system.",
-        vi: "Dẫn phần frontend và hệ UI dùng chung.",
-      },
-      technicalDecisions: [
+      built: [
         {
-          en: "Capacitor so native shells reused the web UI.",
-          vi: "Capacitor để lớp native dùng lại UI web.",
+          en: "Company-wide AI chat and a RAG agent that answers from internal documents.",
+          vi: "AI chat toàn công ty và RAG agent trả lời dựa trên tài liệu nội bộ.",
         },
         {
-          en: "A component system before adding more product surfaces.",
-          vi: "Làm hệ component trước khi thêm bề mặt sản phẩm.",
+          en: "Agents that create leave requests, IT tickets, and meeting-room bookings from a chat message.",
+          vi: "Agent tạo đơn nghỉ phép, IT ticket và đặt phòng họp chỉ từ một tin nhắn.",
+        },
+        {
+          en: "Department tools: payment vouchers, payment checks, and QC voice review.",
+          vi: "Công cụ theo phòng ban: tạo phiếu thanh toán, kiểm tra thanh toán, QC giọng nói.",
         },
       ],
-      challenges: [
+      decisions: [
         {
-          en: "Native integration without giving up a single codebase.",
-          vi: "Tích hợp native mà không tách codebase.",
+          en: "Dify for agent and workflow orchestration, LibreChat as the chat front end, and self-hosted LLMs for privacy.",
+          vi: "Dify để điều phối agent và workflow, LibreChat làm giao diện chat, LLM self-host để bảo mật dữ liệu.",
+        },
+        {
+          en: "Agents call actions that already exist in the company systems, so AI output goes through the same approval flows as manual requests.",
+          vi: "Agent gọi đúng các thao tác có sẵn trong hệ thống công ty, nên kết quả từ AI vẫn đi qua luồng duyệt như khi tạo tay.",
+        },
+        {
+          en: "Started on the OpenAI API, then moved everything to local LLMs so internal data never leaves the company.",
+          vi: "Ban đầu dùng API của OpenAI, sau đó chuyển toàn bộ sang LLM local để dữ liệu nội bộ không ra khỏi công ty.",
         },
       ],
       results: [
         {
-          en: "Web and mobile shipped from the same UI system.",
-          vi: "Web và mobile ra từ cùng một hệ UI.",
+          en: "8+ AI features in use across departments.",
+          vi: "8+ chức năng AI đang được các phòng ban sử dụng.",
+        },
+        {
+          en: "Routine requests take one message instead of a form.",
+          vi: "Các yêu cầu thường ngày chỉ cần một tin nhắn thay vì điền form.",
         },
       ],
     },
   },
   {
-    id: "hr-management",
-    category: "mobile",
-    name: {
-      en: "HR Management App",
-      vi: "Ứng dụng quản lý nhân sự",
-    },
-    role: { en: "Mobile Developer", vi: "Mobile Developer" },
+    id: "social-golf-app",
+    kind: "work",
+    featured: true,
+    nda: true,
+    name: { en: "Internal Social & Golf App", vi: "App mạng xã hội nội bộ & Golf" },
+    company: "Motives Vietnam",
+    period: { en: "2024 – 2025", vi: "2024 – 2025" },
+    role: { en: "Flutter Developer, built from scratch", vi: "Flutter Developer, xây từ đầu" },
     shortDescription: {
-      en: "Internal HR app used by 400+ employees, released through Google Play and TestFlight.",
-      vi: "App nhân sự nội bộ cho hơn 400 nhân viên, phát hành qua Google Play và TestFlight.",
+      en: "A company social app with posts, friends, chat, and sports clubs, plus a GPS golf-scoring module for leadership.",
+      vi: "App mạng xã hội nội bộ với đăng bài, kết bạn, nhắn tin, câu lạc bộ thể thao, kèm module ghi điểm golf có GPS cho ban lãnh đạo.",
     },
-    technologies: ["Flutter", "Clean Architecture", "REST API", "TestFlight"],
-    features: [
-      { en: "HR workflows for employees", vi: "Luồng nhân sự cho nhân viên" },
-      { en: "Store release process", vi: "Quy trình phát hành store" },
-      { en: "Legacy module refactors", vi: "Tái cấu trúc module cũ" },
+    technologies: ["Flutter", "Firebase", "Firestore", "Cloud Messaging", "Google Maps", "REST API"],
+    metrics: [
+      { value: same("~500"), label: { en: "employees", vi: "nhân viên" } },
+      { value: { en: "0 → 1", vi: "0 → 1" }, label: { en: "built from scratch", vi: "xây từ đầu" } },
+      { value: same("iOS + Android"), label: { en: "one Flutter codebase", vi: "một codebase Flutter" } },
     ],
-    challenges: [
-      {
-        en: "Older modules had to be refactored without stopping releases.",
-        vi: "Module cũ phải được sửa mà không dừng lịch phát hành.",
-      },
-    ],
-    outcome: {
-      en: "Kept a 400+ user HR app maintainable and shipping on both stores.",
-      vi: "Giữ app nhân sự hơn 400 người dễ bảo trì và vẫn lên cả hai store.",
-    },
-    images: ["/images/project-hr-app.jpg"],
+    image: "/images/project-golf-app.jpg",
     caseStudy: {
-      overview: {
-        en: "An internal HR mobile app with a Clean Architecture structure.",
-        vi: "App mobile nhân sự nội bộ theo Clean Architecture.",
+      context: {
+        en: "The company wanted one place for internal news, colleagues, and sports clubs. Leadership also wanted to track golf rounds.",
+        vi: "Công ty cần một nơi cho tin nội bộ, kết nối đồng nghiệp và câu lạc bộ thể thao. Ban lãnh đạo cũng muốn theo dõi các trận golf.",
       },
-      problem: {
-        en: "Legacy modules were slowing changes and making releases riskier.",
-        vi: "Module cũ làm thay đổi chậm và bản phát hành rủi ro hơn.",
-      },
-      solution: {
-        en: "A scalable module layout, tighter API handling, and a regular store release flow.",
-        vi: "Bố cục module mở rộng được, xử lý API gọn hơn và lịch phát hành store đều.",
-      },
-      contribution: {
-        en: "Built and maintained the app, including Play Console and TestFlight releases.",
-        vi: "Xây và bảo trì app, gồm phát hành trên Play Console và TestFlight.",
-      },
-      technicalDecisions: [
+      built: [
         {
-          en: "Clean Architecture so HR features could be reused.",
-          vi: "Clean Architecture để tính năng nhân sự dùng lại được.",
+          en: "Posts, comments, friends, and real-time chat on Firestore, with push notifications.",
+          vi: "Đăng bài, bình luận, kết bạn và nhắn tin real-time trên Firestore, kèm thông báo đẩy.",
         },
         {
-          en: "Refactor legacy modules instead of rewriting the app.",
-          vi: "Sửa module cũ thay vì viết lại cả app.",
+          en: "Sports club membership and management.",
+          vi: "Tham gia và quản lý câu lạc bộ thể thao.",
+        },
+        {
+          en: "A golf module with GPS, course maps, and live scoring.",
+          vi: "Module golf có GPS, bản đồ sân và ghi điểm trực tiếp.",
         },
       ],
-      challenges: [
+      decisions: [
         {
-          en: "Cutting technical debt while release trains kept moving.",
-          vi: "Giảm nợ kỹ thuật trong lúc lịch phát hành vẫn chạy.",
+          en: "Flutter so one small team could ship iOS and Android together.",
+          vi: "Chọn Flutter để một team nhỏ ra được cả iOS và Android cùng lúc.",
+        },
+        {
+          en: "Firestore and Cloud Messaging for real-time feed and chat without building that infrastructure ourselves.",
+          vi: "Dùng Firestore và Cloud Messaging cho feed và chat real-time, không phải tự dựng hạ tầng.",
         },
       ],
       results: [
         {
-          en: "In use by 400+ employees.",
-          vi: "Hơn 400 nhân viên đang dùng.",
+          en: "Released to employees on iOS and Android.",
+          vi: "Đã phát hành cho nhân viên trên iOS và Android.",
         },
         {
-          en: "Releases managed on Google Play and TestFlight.",
-          vi: "Bản phát hành quản lý trên Google Play và TestFlight.",
+          en: "Leadership tracks golf rounds and scores live in the app.",
+          vi: "Ban lãnh đạo theo dõi trận và ghi điểm golf trực tiếp trên app.",
         },
       ],
     },
   },
   {
-    id: "video-streaming",
-    category: "mobile",
-    name: {
-      en: "Video Streaming Platform",
-      vi: "Nền tảng phát video",
-    },
-    role: {
-      en: "Flutter Developer, Vitalify Asia",
-      vi: "Flutter Developer, Vitalify Asia",
-    },
+    id: "restaurant-loyalty",
+    coverIcon: "store",
+    kind: "work",
+    nda: true,
+    name: { en: "Restaurant Loyalty Platform", vi: "Nền tảng loyalty cho chuỗi nhà hàng" },
+    company: "Motives Vietnam",
+    period: { en: "2026 – Present", vi: "2026 – nay" },
+    role: { en: "Mobile and web admin", vi: "Mobile và web admin" },
     shortDescription: {
-      en: "Playback, browsing, and interaction for a high-traffic, YouTube-like video app.",
-      vi: "Phát video, duyệt nội dung và tương tác cho app video lưu lượng cao, kiểu YouTube.",
+      en: "A membership app and web admin for a restaurant chain in the group: scan receipts, earn points, redeem rewards.",
+      vi: "App thành viên và web admin cho chuỗi nhà hàng trong tập đoàn: quét hoá đơn, tích điểm, đổi quà.",
     },
-    technologies: ["Flutter", "REST API", "Firebase", "Clean Architecture", "Bloc"],
-    features: [
-      { en: "Video playback", vi: "Phát video" },
-      { en: "Content browsing", vi: "Duyệt nội dung" },
-      { en: "User interaction", vi: "Tương tác người dùng" },
+    technologies: ["Flutter", "React", "TypeScript", "Vite", "REST API"],
+    metrics: [
+      { value: same("2"), label: { en: "products: app + admin", vi: "sản phẩm: app + admin" } },
     ],
-    challenges: [
-      {
-        en: "Playback had to stay smooth while media payloads grew.",
-        vi: "Phát video phải mượt khi payload media tăng.",
-      },
-    ],
-    outcome: {
-      en: "Core viewing flows shipped against APIs built for large media volume.",
-      vi: "Các luồng xem chính chạy trên API làm cho khối lượng media lớn.",
-    },
-    images: ["/images/project-video-streaming.jpg"],
     caseStudy: {
-      overview: {
-        en: "A high-traffic video app with playback, browsing, and user interaction.",
-        vi: "App video lưu lượng cao với phát, duyệt và tương tác.",
+      context: {
+        en: "The group's F&B company needed a loyalty program its restaurants could run themselves.",
+        vi: "Công ty F&B trong tập đoàn cần một chương trình khách hàng thân thiết mà các nhà hàng tự vận hành được.",
       },
-      problem: {
-        en: "Loading and data flow were getting in the way of smooth playback.",
-        vi: "Cách tải và luồng dữ liệu đang cản phát video mượt.",
-      },
-      solution: {
-        en: "Flutter with Clean Architecture, Provider, and Bloc, integrated with media APIs.",
-        vi: "Flutter với Clean Architecture, Provider và Bloc, nối API media.",
-      },
-      contribution: {
-        en: "Built the main viewing features and worked with backend on media APIs.",
-        vi: "Làm các tính năng xem chính và phối hợp backend về API media.",
-      },
-      technicalDecisions: [
+      built: [
         {
-          en: "Clean Architecture so playback, browse, and interaction stayed separate.",
-          vi: "Clean Architecture để phát, duyệt và tương tác tách nhau.",
+          en: "Flutter app for receipt scanning, point balance, and reward redemption.",
+          vi: "App Flutter để quét hoá đơn, xem điểm và đổi quà.",
         },
         {
-          en: "Bloc and Provider for different kinds of UI state.",
-          vi: "Bloc và Provider cho các loại UI state khác nhau.",
+          en: "React + TypeScript admin for members, rewards, and point rules.",
+          vi: "Trang admin React + TypeScript để quản lý thành viên, quà và quy tắc tích điểm.",
         },
       ],
-      challenges: [
+      decisions: [
         {
-          en: "Keeping playback smooth as content volume grew.",
-          vi: "Giữ phát mượt khi lượng nội dung tăng.",
+          en: "Vite for a fast, light admin build; Flutter to reuse the team's mobile stack.",
+          vi: "Dùng Vite cho admin nhẹ và build nhanh; Flutter để tận dụng stack mobile sẵn có của team.",
         },
       ],
       results: [
         {
-          en: "Viewing, browsing, and interaction shipped in one Flutter app.",
-          vi: "Xem, duyệt và tương tác nằm trong một app Flutter.",
+          en: "One loyalty system shared by the app and the admin.",
+          vi: "Một hệ thống loyalty dùng chung cho app và admin.",
         },
       ],
     },
   },
   {
-    id: "medical-device-apps",
-    category: "mobile",
-    name: {
-      en: "Medical Device Apps",
-      vi: "Ứng dụng thiết bị y tế",
-    },
-    role: {
-      en: "Android and iOS Developer, Vitalify Asia",
-      vi: "Android và iOS Developer, Vitalify Asia",
-    },
+    id: "omron-ble",
+    kind: "work",
+    nda: true,
+    name: { en: "Omron Health Companion App", vi: "App sức khoẻ kết nối thiết bị Omron" },
+    company: "Vitalify Asia",
+    period: { en: "2022 · 4 months", vi: "2022 · 4 tháng" },
+    role: { en: "Android Developer, Japanese client", vi: "Android Developer, khách hàng Nhật" },
     shortDescription: {
-      en: "Android and iOS companion apps with BLE sync for Omron medical devices.",
-      vi: "App đi kèm Android và iOS, đồng bộ BLE với thiết bị y tế Omron.",
+      en: "An Android health app on the Japanese store that reads measurements from Omron medical devices over BLE.",
+      vi: "App sức khoẻ Android trên store Nhật, đọc số đo từ thiết bị y tế Omron qua BLE.",
     },
-    technologies: ["Flutter", "Kotlin", "Swift", "BLE", "Firebase", "WebSocket"],
-    features: [
-      { en: "Omron device sync", vi: "Đồng bộ thiết bị Omron" },
-      { en: "Multimedia playback", vi: "Phát multimedia" },
-      { en: "Chatbot and push notifications", vi: "Chatbot và thông báo đẩy" },
-      { en: "In-app purchase", vi: "Mua trong ứng dụng" },
+    technologies: ["Kotlin", "Java", "BLE", "REST API", "Firebase"],
+    metrics: [
+      { value: same("BLE"), label: { en: "medical device sync", vi: "đồng bộ thiết bị y tế" } },
     ],
-    challenges: [
-      {
-        en: "BLE sessions had to stay reliable next to media and chat features.",
-        vi: "Phiên BLE phải ổn định cạnh các tính năng media và chat.",
-      },
-    ],
-    outcome: {
-      en: "Companion apps synced live device data and shipped the surrounding product features.",
-      vi: "App đi kèm đồng bộ dữ liệu thiết bị trực tiếp và có đủ tính năng sản phẩm xung quanh.",
-    },
-    images: ["/images/project-medical-ble.jpg"],
+    image: "/images/project-medical-ble.jpg",
     caseStudy: {
-      overview: {
-        en: "Mobile apps that talk to Omron devices and cover media, chat, and purchases.",
-        vi: "App mobile nói chuyện với thiết bị Omron, kèm media, chat và mua hàng.",
+      context: {
+        en: "A Japanese client's health-check app that pairs with Omron devices and keeps users' readings in one place.",
+        vi: "App kiểm tra sức khoẻ của khách hàng Nhật, kết nối thiết bị Omron và lưu số đo của người dùng ở một nơi.",
       },
-      problem: {
-        en: "Device data, media, and chat were competing for a stable UI.",
-        vi: "Dữ liệu thiết bị, media và chat cùng tranh một UI ổn định.",
-      },
-      solution: {
-        en: "Native and Flutter work with BLE, REST, WebSocket, and Firebase.",
-        vi: "Phần native và Flutter với BLE, REST, WebSocket và Firebase.",
-      },
-      contribution: {
-        en: "Built connectivity, multimedia, chatbot, notifications, and in-app purchase.",
-        vi: "Làm kết nối, multimedia, chatbot, thông báo và mua trong ứng dụng.",
-      },
-      technicalDecisions: [
+      built: [
         {
-          en: "BLE for Omron device sessions.",
-          vi: "BLE cho phiên thiết bị Omron.",
+          en: "BLE pairing and data transfer from Omron devices.",
+          vi: "Kết nối BLE và truyền dữ liệu từ thiết bị Omron.",
         },
         {
-          en: "Profiling passes aimed at responsiveness, not new features.",
-          vi: "Các lượt đo hiệu năng nhắm vào độ phản hồi, không thêm tính năng.",
+          en: "New features and maintenance on the existing app.",
+          vi: "Làm tính năng mới và bảo trì app đang chạy.",
         },
       ],
-      challenges: [
+      decisions: [
         {
-          en: "Keeping the UI responsive during sync and media playback.",
-          vi: "Giữ UI phản hồi trong lúc đồng bộ và phát media.",
+          en: "Handle pairing, reconnects, and partial transfers explicitly, because BLE drops are normal on real devices.",
+          vi: "Xử lý rõ ràng việc pairing, kết nối lại và truyền dữ liệu dở dang, vì mất kết nối BLE là chuyện bình thường trên máy thật.",
         },
       ],
       results: [
         {
-          en: "Live sync with Omron medical and IoT devices.",
-          vi: "Đồng bộ trực tiếp với thiết bị y tế và IoT Omron.",
+          en: "Device readings sync into the app on the Japanese store.",
+          vi: "Số đo từ thiết bị được đồng bộ vào app trên store Nhật.",
+        },
+      ],
+    },
+  },
+  {
+    id: "freeva",
+    coverIcon: "wallet",
+    kind: "side",
+    inProgress: true,
+    name: { en: "Freeva: Personal Finance", vi: "Freeva: Quản lý tài chính cá nhân" },
+    period: { en: "2026 – Present", vi: "2026 – nay" },
+    role: { en: "Full stack, solo", vi: "Full stack, tự làm" },
+    shortDescription: {
+      en: "The finance app I wanted but couldn't find for free. A monorepo with a Flutter app, Next.js admin, and NestJS API.",
+      vi: "App tài chính tôi muốn dùng nhưng không tìm được bản miễn phí. Monorepo gồm app Flutter, admin Next.js và API NestJS.",
+    },
+    technologies: ["Flutter", "Next.js", "NestJS", "Prisma", "PostgreSQL", "OpenAPI", "Docker"],
+    metrics: [
+      { value: same("3"), label: { en: "apps, one monorepo", vi: "app, một monorepo" } },
+    ],
+    links: { github: "https://github.com/vanhuy-30/freeva-personal-finance-management" },
+    caseStudy: {
+      context: {
+        en: "Store apps were paywalled or missing features I needed, so I'm building my own from scratch.",
+        vi: "Các app trên store hoặc thu phí, hoặc thiếu tính năng tôi cần, nên tôi tự xây từ đầu.",
+      },
+      built: [
+        {
+          en: "Core loop: sign up, create wallets, record transactions, see balances and reports.",
+          vi: "Luồng chính: đăng ký, tạo ví, ghi giao dịch, xem số dư và báo cáo.",
+        },
+        {
+          en: "Flutter mobile app, Next.js admin, and NestJS + Prisma + PostgreSQL API.",
+          vi: "App Flutter, admin Next.js và API NestJS + Prisma + PostgreSQL.",
+        },
+      ],
+      decisions: [
+        {
+          en: "OpenAPI contracts as the source of truth between the API, app, and admin.",
+          vi: "Dùng OpenAPI contract làm nguồn chuẩn giữa API, app và admin.",
+        },
+        {
+          en: "Shared design tokens and Docker Compose for local Postgres, Redis, and Mailhog.",
+          vi: "Design token dùng chung, Docker Compose cho Postgres, Redis và Mailhog ở local.",
+        },
+      ],
+      results: [
+        {
+          en: "In progress. Code and roadmap are public on GitHub.",
+          vi: "Đang phát triển. Code và roadmap công khai trên GitHub.",
         },
       ],
     },
   },
   {
     id: "flutter-starter-kit",
-    category: "personal",
-    name: {
-      en: "Flutter Starter Kit",
-      vi: "Flutter Starter Kit",
-    },
-    role: { en: "Personal project", vi: "Dự án cá nhân" },
+    kind: "side",
+    name: same("Flutter Starter Kit"),
+    period: { en: "Personal project", vi: "Dự án cá nhân" },
+    role: { en: "Open-source template", vi: "Template mã nguồn mở" },
     shortDescription: {
-      en: "A reusable Flutter starter with Clean Architecture, Atomic Design, and shared UI pieces.",
-      vi: "Bộ khởi đầu Flutter dùng lại, theo Clean Architecture, Atomic Design và UI dùng chung.",
+      en: "A production-ready Flutter template: Clean Architecture, Riverpod + MVVM, flavors, and an atomic design system.",
+      vi: "Template Flutter sẵn sàng cho production: Clean Architecture, Riverpod + MVVM, nhiều môi trường và design system theo Atomic Design.",
     },
-    technologies: ["Flutter", "Provider", "Bloc", "Firebase", "Hive"],
-    features: [
-      { en: "Modular project structure", vi: "Cấu trúc dự án theo module" },
-      { en: "Reusable UI components", vi: "Component UI dùng lại" },
-      { en: "Standard state management", vi: "State management thống nhất" },
+    technologies: ["Flutter", "Riverpod", "GoRouter", "Dio", "Retrofit", "Hive", "Firebase"],
+    metrics: [
+      { value: same("3"), label: { en: "flavors: dev, stg, prod", vi: "môi trường: dev, stg, prod" } },
     ],
-    challenges: [
-      {
-        en: "The kit had to stay small enough that a new app could start from it.",
-        vi: "Bộ kit phải đủ gọn để một app mới bắt đầu từ nó.",
-      },
-    ],
-    outcome: {
-      en: "New Flutter apps start from the same structure instead of a blank project.",
-      vi: "App Flutter mới bắt đầu từ cùng một cấu trúc, không từ project trống.",
-    },
-    images: ["/images/project-flutter-starter.jpg"],
+    links: { github: "https://github.com/vanhuy-30/flutter-starterkit" },
+    image: "/images/project-flutter-starter.jpg",
     caseStudy: {
-      overview: {
-        en: "A starter kit for Flutter apps that follow Clean Architecture and Atomic Design.",
-        vi: "Bộ starter cho app Flutter theo Clean Architecture và Atomic Design.",
+      context: {
+        en: "Every new Flutter app was rebuilding the same folders, networking, auth, and UI basics.",
+        vi: "Mỗi app Flutter mới lại phải dựng lại cấu trúc thư mục, networking, auth và UI cơ bản.",
       },
-      problem: {
-        en: "Each new app was rebuilding the same folders, state setup, and UI primitives.",
-        vi: "Mỗi app mới lại dựng lại thư mục, state và UI cơ bản.",
-      },
-      solution: {
-        en: "A modular starter with shared components, state conventions, and local storage via Hive.",
-        vi: "Starter theo module, component dùng chung, quy ước state và lưu cục bộ bằng Hive.",
-      },
-      contribution: {
-        en: "Designed and built the kit as a personal project.",
-        vi: "Thiết kế và xây bộ kit như một dự án cá nhân.",
-      },
-      technicalDecisions: [
+      built: [
         {
-          en: "Clean Architecture plus Atomic Design for the folder and UI rules.",
-          vi: "Clean Architecture và Atomic Design cho quy tắc thư mục và UI.",
+          en: "Feature modules split into data, domain, and presentation layers.",
+          vi: "Module theo tính năng, chia thành các lớp data, domain và presentation.",
         },
         {
-          en: "Provider and Bloc available so a new app can pick one.",
-          vi: "Có sẵn Provider và Bloc để app mới chọn một hướng.",
+          en: "Dio + Retrofit networking with auth, retry, and logging interceptors; secure token storage.",
+          vi: "Networking bằng Dio + Retrofit với interceptor cho auth, retry và logging; lưu token an toàn.",
+        },
+        {
+          en: "GoRouter with guards and deep links, localization, theming, and an atomic design system.",
+          vi: "GoRouter có guard và deep link, đa ngôn ngữ, theme và design system theo Atomic Design.",
         },
       ],
-      challenges: [
+      decisions: [
         {
-          en: "Keeping the starter opinionated without blocking the next app's choices.",
-          vi: "Giữ starter có chủ kiến mà không chặn lựa chọn của app sau.",
+          en: "Riverpod + MVVM for testable, explicit state.",
+          vi: "Riverpod + MVVM để state rõ ràng và dễ test.",
+        },
+        {
+          en: "Separate entry points for dev, staging, and prod.",
+          vi: "Tách entry point riêng cho dev, staging và prod.",
         },
       ],
       results: [
         {
-          en: "Faster kickoff and more consistent Flutter code.",
-          vi: "Bắt đầu nhanh hơn và code Flutter nhất quán hơn.",
+          en: "New apps start from a working structure instead of a blank project.",
+          vi: "App mới bắt đầu từ một cấu trúc chạy được thay vì project trống.",
         },
       ],
+    },
+  },
+];
+
+const otherWork: { id: string; name: Copy; detail: Copy }[] = [
+  {
+    id: "golf-commerce",
+    name: { en: "Golf shop & scoring app", vi: "App golf: bán hàng & ghi điểm" },
+    detail: {
+      en: "Android, Japanese client. Shop, round scoring, shareable scorecard images and videos, in-app purchases.",
+      vi: "Android, khách hàng Nhật. Bán hàng, ghi điểm trận, tạo ảnh và video bảng điểm để chia sẻ, mua trong ứng dụng.",
+    },
+  },
+  {
+    id: "video-subscriptions",
+    name: { en: "Video subscription app", vi: "App xem video có subscription" },
+    detail: {
+      en: "Flutter, Japanese client. Channels, follows, and subscriptions that unlock more videos.",
+      vi: "Flutter, khách hàng Nhật. Channel, đăng ký kênh và subscription để mở khoá thêm video.",
+    },
+  },
+  {
+    id: "vitalify-hrm",
+    name: { en: "HRM app at Vitalify", vi: "App HRM tại Vitalify" },
+    detail: {
+      en: "Flutter, 200+ users. Face-recognition check-in, leave balances, and leave requests.",
+      vi: "Flutter, hơn 200 người dùng. Chấm công bằng khuôn mặt, theo dõi ngày phép, tạo đơn nghỉ.",
+    },
+  },
+  {
+    id: "smaller-work",
+    name: { en: "Smaller projects", vi: "Các dự án nhỏ khác" },
+    detail: {
+      en: "Another Android app in maintenance, plus backend APIs and small internal tools at Motives.",
+      vi: "Bảo trì thêm một app Android, cùng các API backend và công cụ nội bộ nhỏ tại Motives.",
     },
   },
 ];
@@ -487,29 +459,36 @@ const source: SourceProject[] = [
 export function getProjects(locale: Locale): Project[] {
   return source.map((project) => ({
     id: project.id,
-    category: project.category,
+    kind: project.kind,
     featured: project.featured,
+    nda: project.nda,
+    inProgress: project.inProgress,
     name: tx(project.name, locale),
+    company: project.company,
+    period: tx(project.period, locale),
     role: tx(project.role, locale),
     shortDescription: tx(project.shortDescription, locale),
     technologies: project.technologies,
-    features: project.features.map((item) => tx(item, locale)),
-    challenges: project.challenges.map((item) => tx(item, locale)),
-    outcome: tx(project.outcome, locale),
+    metrics: project.metrics.map((metric) => ({
+      value: tx(metric.value, locale),
+      label: tx(metric.label, locale),
+    })),
     links: project.links ?? {},
-    images: project.images.length
-      ? project.images
-      : ["/images/project-placeholder.png"],
+    image: project.image,
+    coverIcon: project.coverIcon,
     caseStudy: {
-      overview: tx(project.caseStudy.overview, locale),
-      problem: tx(project.caseStudy.problem, locale),
-      solution: tx(project.caseStudy.solution, locale),
-      contribution: tx(project.caseStudy.contribution, locale),
-      technicalDecisions: project.caseStudy.technicalDecisions.map((item) =>
-        tx(item, locale)
-      ),
-      challenges: project.caseStudy.challenges.map((item) => tx(item, locale)),
+      context: tx(project.caseStudy.context, locale),
+      built: project.caseStudy.built.map((item) => tx(item, locale)),
+      decisions: project.caseStudy.decisions.map((item) => tx(item, locale)),
       results: project.caseStudy.results.map((item) => tx(item, locale)),
     },
+  }));
+}
+
+export function getOtherWork(locale: Locale): OtherWorkItem[] {
+  return otherWork.map((item) => ({
+    id: item.id,
+    name: tx(item.name, locale),
+    detail: tx(item.detail, locale),
   }));
 }

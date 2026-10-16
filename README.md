@@ -1,6 +1,6 @@
 # Ly Van Huy — Portfolio
 
-Bilingual (EN / VI) personal portfolio for Ly Van Huy, Software Engineer. Built to present experience, projects, and contact details for recruiters and hiring managers.
+Bilingual (EN / VI) personal portfolio for Ly Van Huy, Software Engineer. Built to present experience, projects, and contact details for recruiters and hiring managers. Content lives in `src/data` and `src/i18n`.
 
 **Live stack:** Next.js 15 · React 19 · TypeScript · Tailwind CSS · Framer Motion · Cloudflare Workers (OpenNext)
 
@@ -8,7 +8,7 @@ Bilingual (EN / VI) personal portfolio for Ly Van Huy, Software Engineer. Built 
 
 - Light-first UI with dark mode and warm terracotta theme
 - English / Vietnamese locale toggle
-- Sections: Hero, About, Experience, Projects (case studies), Architecture, Skills, Contact
+- Sections: Hero, About, Experience, Projects (featured work, side projects, case studies), Skills, How I work, Contact
 - Motion and interaction polish (scroll progress, reveals, case-study sheet)
 - Deployed to Cloudflare Workers via `@opennextjs/cloudflare`
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Lock } from "lucide-react";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
 import { externalHref } from "@/lib/links";
@@ -38,40 +38,37 @@ export function CaseStudySheet({
 
   const tabs = [
     {
-      id: "overview",
-      label: t.projects.tabs.overview,
+      id: "context",
+      label: t.projects.tabs.context,
+      content: <p>{project.caseStudy.context}</p>,
+    },
+    {
+      id: "built",
+      label: t.projects.tabs.built,
       content: (
-        <div className="space-y-4">
-          <p>{project.caseStudy.overview}</p>
-          <p>{project.caseStudy.problem}</p>
-          <p>{project.caseStudy.solution}</p>
-          <p>{project.caseStudy.contribution}</p>
-        </div>
+        <ul className="list-disc space-y-2 pl-5 marker:text-accent">
+          {project.caseStudy.built.map((item, index) => (
+            <li key={`${project.id}-built-${index}`}>{item}</li>
+          ))}
+        </ul>
       ),
     },
     {
-      id: "approach",
-      label: t.projects.tabs.approach,
+      id: "decisions",
+      label: t.projects.tabs.decisions,
       content: (
-        <div className="space-y-5">
-          <ul className="list-disc space-y-2 pl-5">
-            {project.caseStudy.technicalDecisions.map((item, index) => (
-              <li key={`${project.id}-tech-${index}`}>{item}</li>
-            ))}
-          </ul>
-          <ul className="list-disc space-y-2 pl-5">
-            {project.caseStudy.challenges.map((item, index) => (
-              <li key={`${project.id}-challenge-${index}`}>{item}</li>
-            ))}
-          </ul>
-        </div>
+        <ul className="list-disc space-y-2 pl-5 marker:text-accent">
+          {project.caseStudy.decisions.map((item, index) => (
+            <li key={`${project.id}-decision-${index}`}>{item}</li>
+          ))}
+        </ul>
       ),
     },
     {
       id: "results",
       label: t.projects.tabs.results,
       content: (
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-5 marker:text-accent">
           {project.caseStudy.results.map((item, index) => (
             <li key={`${project.id}-result-${index}`}>{item}</li>
           ))}
@@ -88,33 +85,50 @@ export function CaseStudySheet({
       closeLabel={t.common.close}
     >
       <div className="space-y-8">
-        {project.images.length ? (
-          <div className="grid gap-3">
-            {project.images.map((src) => (
-              <div
-                key={src}
-                className="relative aspect-[16/10] overflow-hidden rounded-panel border border-border bg-[var(--surface)]"
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 512px"
-                />
-              </div>
-            ))}
+        {project.image ? (
+          <div className="relative aspect-[16/10] overflow-hidden rounded-panel border border-border bg-[var(--surface)]">
+            <Image
+              src={project.image}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 512px"
+            />
           </div>
         ) : null}
 
         <div>
-          <p className="text-sm font-medium text-muted">{t.projects.role}</p>
+          <p className="text-sm font-medium text-muted">
+            {[project.company, project.period].filter(Boolean).join(" · ")}
+          </p>
           <p className="mt-1 text-sm md:text-base">{project.role}</p>
-          <p className="mt-3 text-sm text-ink-muted leading-relaxed">
+          <p className="mt-3 text-base text-ink leading-relaxed">
             {project.shortDescription}
           </p>
-          <p className="mt-4 max-w-[62ch] text-base text-ink">{project.outcome}</p>
+          {project.nda ? (
+            <p className="mt-4 flex items-start gap-2 rounded-control border border-border bg-[var(--surface)]/60 px-3 py-2.5 text-sm text-ink-muted">
+              <Lock className="mt-0.5 size-4 shrink-0" aria-hidden />
+              {t.projects.ndaNote}
+            </p>
+          ) : null}
         </div>
+
+        {project.metrics.length ? (
+          <dl className="grid grid-cols-2 gap-3">
+            {project.metrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="rounded-control border border-border px-4 py-3"
+              >
+                <dt className="sr-only">{metric.label}</dt>
+                <dd className="text-xl font-semibold tracking-tight text-ink">
+                  {metric.value}
+                </dd>
+                <dd className="text-xs text-ink-muted">{metric.label}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
 
         <div>
           <p className="mb-3 text-sm font-medium text-muted">
@@ -127,24 +141,6 @@ export function CaseStudySheet({
           </div>
         </div>
 
-        {project.features.length ? (
-          <div>
-            <p className="mb-3 text-sm font-medium text-muted">
-              {t.projects.features}
-            </p>
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {project.features.map((feature, index) => (
-                <li
-                  key={`${project.id}-feature-${index}`}
-                  className="rounded-control border border-border bg-[var(--surface)]/60 px-3 py-2.5 text-sm text-ink"
-                >
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-
         <Tabs items={tabs} label={t.projects.openCase} />
 
         {links.length ? (
@@ -153,6 +149,8 @@ export function CaseStudySheet({
               <a
                 key={item.label}
                 href={item.href}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex min-h-11 items-center gap-2 rounded-control border border-border px-4 py-2.5 text-sm hover:border-accent hover:text-accent-ink transition"
               >
                 {item.icon ? <item.icon className="size-4" aria-hidden /> : null}

@@ -19,40 +19,29 @@ import { getExperience } from "@/data/experience";
 
 const PREVIEW_COUNT = 2;
 
-function RoleBody({
-  roleId,
-  highlight,
-  responsibilities,
-  technologies,
+function PhaseBody({
+  phaseId,
+  points,
   showMoreLabel,
   showLessLabel,
 }: {
-  roleId: string;
-  highlight?: string;
-  responsibilities: string[];
-  technologies: string[];
+  phaseId: string;
+  points: string[];
   showMoreLabel: string;
   showLessLabel: string;
 }) {
   const [expanded, setExpanded] = useState(false);
   const reduce = useReducedMotion();
-  const needsToggle = responsibilities.length > PREVIEW_COUNT;
-  const visible = expanded
-    ? responsibilities
-    : responsibilities.slice(0, PREVIEW_COUNT);
+  const needsToggle = points.length > PREVIEW_COUNT;
+  const visible = expanded ? points : points.slice(0, PREVIEW_COUNT);
 
   return (
     <>
-      {highlight ? (
-        <p className="mt-3 max-w-[62ch] text-sm text-ink md:text-base">
-          {highlight}
-        </p>
-      ) : null}
-      <ul className="mt-3 max-w-[62ch] space-y-2 text-sm text-ink-muted">
+      <ul className="mt-3 max-w-[66ch] list-disc space-y-2 pl-5 text-sm text-ink-muted marker:text-accent md:text-base">
         <AnimatePresence initial={false}>
           {visible.map((line, lineIndex) => (
             <motion.li
-              key={`${roleId}-resp-${lineIndex}`}
+              key={`${phaseId}-point-${lineIndex}`}
               initial={reduce ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? undefined : { opacity: 0 }}
@@ -66,18 +55,13 @@ function RoleBody({
       {needsToggle ? (
         <button
           type="button"
-          className="mt-3 inline-flex min-h-11 items-center rounded-control px-1 text-sm font-medium text-accent-ink transition hover:underline focus-visible:outline-none"
+          className="mt-2 inline-flex min-h-11 items-center rounded-control px-1 text-sm font-medium text-accent-ink transition hover:underline focus-visible:outline-none"
           onClick={() => setExpanded((value) => !value)}
           aria-expanded={expanded}
         >
           {expanded ? showLessLabel : showMoreLabel}
         </button>
       ) : null}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {technologies.map((tech, techIndex) => (
-          <Badge key={`${roleId}-tech-${techIndex}`}>{tech}</Badge>
-        ))}
-      </div>
     </>
   );
 }
@@ -172,46 +156,56 @@ export function Experience() {
                       : "border-t border-border pt-8"
                   }
                 >
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-xl font-semibold tracking-tight">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <h3 className="text-xl font-semibold tracking-tight md:text-2xl">
                       {item.company}
                     </h3>
-                    {item.location ? (
-                      <span className="text-sm text-muted">{item.location}</span>
-                    ) : null}
+                    <p className="text-sm text-muted">{item.period}</p>
                   </div>
+                  <p className="mt-1 text-base font-medium text-ink">
+                    {item.title}
+                    {item.location ? (
+                      <span className="font-normal text-muted">
+                        {" "}
+                        · {item.location}
+                      </span>
+                    ) : null}
+                  </p>
+                  <p className="mt-3 max-w-[66ch] text-sm text-ink md:text-base">
+                    {item.summary}
+                  </p>
 
-                  <div className="mt-6 space-y-8">
-                    {item.roles.map((role, roleIndex) => {
-                      const roleId = `${item.id}-role-${roleIndex}`;
+                  <div className="mt-6 space-y-6">
+                    {item.phases.map((phase, phaseIndex) => {
+                      const phaseId = `${item.id}-phase-${phaseIndex}`;
                       return (
                         <div
-                          key={roleId}
-                          className="border-t border-border pt-6 first:border-t-0 first:pt-0"
+                          key={phaseId}
+                          className="border-t border-border pt-5 first:border-t-0 first:pt-0"
                         >
                           <div className="flex flex-wrap items-baseline justify-between gap-2">
-                            <h4 className="text-base md:text-lg font-medium">
-                              {role.title}
+                            <h4 className="text-base font-medium md:text-lg">
+                              {phase.label}
                             </h4>
-                            <p className="text-sm text-muted">
-                              {role.startDate} -{" "}
-                              {role.current
-                                ? t.experience.present
-                                : role.endDate}
-                            </p>
+                            {phase.period ? (
+                              <p className="text-sm text-muted">{phase.period}</p>
+                            ) : null}
                           </div>
-
-                          <RoleBody
-                            roleId={roleId}
-                            highlight={role.achievements[0]}
-                            responsibilities={role.responsibilities}
-                            technologies={role.technologies}
+                          <PhaseBody
+                            phaseId={phaseId}
+                            points={phase.points}
                             showMoreLabel={t.experience.showMore}
                             showLessLabel={t.experience.showLess}
                           />
                         </div>
                       );
                     })}
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {item.technologies.map((tech) => (
+                      <Badge key={`${item.id}-${tech}`}>{tech}</Badge>
+                    ))}
                   </div>
                 </div>
               </motion.li>
